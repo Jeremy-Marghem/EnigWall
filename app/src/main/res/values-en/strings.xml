@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EnigWall</string>
+    <string name="signin">Sign in</string>
+    <string name="signup">Sign up</string>
+    <string name="welcome">Welcome in EnigWall</string>
+    <string name="pseudo">Username</string>
+    <string name="mail">Mail</string>
+    <string name="password">Password</string>
+    <string name="password2">Retype password</string>
+    <string name="passwordMessage">Passwords do not match</string>
+    <string name="mailMessage">Mail is incorrect</string>
+    <string name="reset">Reset</string>
+    <string name="signupInProgress">Registration in progress...</string>
+    <string name="hub_welcome">Let\'s the game begin...</string>
+    <string name="toast_mailUsed">The email is already used</string>
+    <string name="toast_pseudoUsed">The username is already used</string>
+    <string name="toastCancel">Cancel</string>
+</resources>

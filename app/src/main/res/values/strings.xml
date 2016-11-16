@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">EnigWall</string>
+    <string name="signin">Se connecter</string>
+    <string name="signup">S\'inscrire</string>
+    <string name="welcome">Bienvenue sur EnigWall</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="mail">E-mail</string>
+    <string name="password">Mot de passe</string>
+    <string name="password2">Retaper le mot de passe</string>
+    <string name="passwordMessage">Les mots de passe ne concordent pas</string>
+    <string name="mailMessage">L\'e-mail est incorrect</string>
+    <string name="reset">Réinitialiser</string>
+    <string name="signupInProgress">Inscription en cours...</string>
+    <string name="hub_welcome">Le jeu commence...</string>
+    <string name="toast_mailUsed">Mail déjà utilisé</string>
+    <string name="toast_pseudoUsed">Pseudo déjà utilisé</string>
+    <string name="toastCancel">Annulé</string>
+</resources>

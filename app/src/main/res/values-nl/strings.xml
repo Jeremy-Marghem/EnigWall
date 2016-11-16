@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EnigWall</string>
+    <string name="signin">Aansluiten</string>
+    <string name="signup">Inschrijven</string>
+    <string name="welcome">Welkom op EnigWall</string>
+    <string name="pseudo">Bijnaam</string>
+    <string name="mail">E-mail</string>
+    <string name="password">Wachtwoord</string>
+    <string name="password2">Herhaal wachtwoord</string>
+    <string name="passwordMessage">Wachtwoorden komen niet overeen</string>
+    <string name="mailMessage">De e-mail is onjuist</string>
+    <string name="reset">Reset</string>
+    <string name="signupInProgress">Huidige registratie...</string>
+    <string name="hub_welcome">Het spel begint...</string>
+    <string name="toast_mailUsed">De e-mail is al in gebruik</string>
+    <string name="toast_pseudoUsed">De gebruikersnaam is al in gebruik</string>
+    <string name="toastCancel">Geannuleerd</string>
+</resources>
