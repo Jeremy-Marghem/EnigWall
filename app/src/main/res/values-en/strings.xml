@@ -3,17 +3,26 @@
     <string name="app_name">EnigWall</string>
     <string name="signin">Sign in</string>
     <string name="signup">Sign up</string>
+    <string name="connexionError">No connection detected</string>
     <string name="welcome">Welcome in EnigWall</string>
     <string name="pseudo">Username</string>
     <string name="mail">Mail</string>
     <string name="password">Password</string>
     <string name="password2">Retype password</string>
     <string name="passwordMessage">Passwords do not match</string>
+    <string name="passwordLenght">The password must contain 4 characters minimum</string>
     <string name="mailMessage">Mail is incorrect</string>
     <string name="reset">Reset</string>
     <string name="signupInProgress">Registration in progress...</string>
     <string name="hub_welcome">Let\'s the game begin...</string>
     <string name="toast_mailUsed">The email is already used</string>
     <string name="toast_pseudoUsed">The username is already used</string>
+    <string name="toast_pseudoLength">The username must contain at least 5 characters</string>
+    <string name="toast_pseudoChar">The nickname must be only characters</string>
     <string name="toastCancel">Cancel</string>
+    <string name="signinInProgress">Connection in progress...</string>
+    <string name="userError">Unknown user</string>
+    <string name="connect">Connection</string>
+    <string name="hub_begin">Start a game</string>
+    <string name="hub_continue">Resume a game</string>
 </resources>

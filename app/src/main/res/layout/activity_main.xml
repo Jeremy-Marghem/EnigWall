@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -66,5 +65,5 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:padding="25dp"
         android:background="@android:color/holo_green_dark"
-        android:onClick="signin" />
+        android:onClick="login" />
 </LinearLayout>

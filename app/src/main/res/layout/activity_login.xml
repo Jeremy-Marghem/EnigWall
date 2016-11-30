@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@color/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_weight="0.08"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:text="@string/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/welcomeTv"
+            android:layout_weight="1"
+            android:textSize="30sp"
+            android:textColor="?android:attr/editTextColor"
+            android:gravity="center"
+            android:textStyle="normal|bold"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:id="@+id/imageView3"
+            android:background="@drawable/fed_wall" />
+
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:rowCount="2"
+        android:columnCount="2"
+        android:layout_marginTop="50dp"
+        android:layout_weight="0.08">
+
+        <TextView
+            android:text="@string/pseudo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView6"
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/pseudoEdLogin"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView7"
+            tools:text="@string/password"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="40dp"
+            android:text="@string/password" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/passwordEdLogin"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp" />
+    </GridLayout>
+
+    <Button
+        android:text="@string/connect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:layout_weight="0.08"
+        android:layout_marginTop="60dp"
+        android:textSize="18sp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:background="@android:color/holo_green_dark"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:onClick="login"/>
+
+</LinearLayout>

@@ -3,17 +3,26 @@
     <string name="app_name">EnigWall</string>
     <string name="signin">Aansluiten</string>
     <string name="signup">Inschrijven</string>
+    <string name="connexionError">Geen verbinding gedetecteerd</string>
     <string name="welcome">Welkom op EnigWall</string>
     <string name="pseudo">Bijnaam</string>
     <string name="mail">E-mail</string>
     <string name="password">Wachtwoord</string>
     <string name="password2">Herhaal wachtwoord</string>
     <string name="passwordMessage">Wachtwoorden komen niet overeen</string>
+    <string name="passwordLenght">Het wachtwoord moet 4 karakters minimuns bevatten</string>
     <string name="mailMessage">De e-mail is onjuist</string>
     <string name="reset">Reset</string>
     <string name="signupInProgress">Huidige registratie...</string>
     <string name="hub_welcome">Het spel begint...</string>
     <string name="toast_mailUsed">De e-mail is al in gebruik</string>
     <string name="toast_pseudoUsed">De gebruikersnaam is al in gebruik</string>
+    <string name="toast_pseudoLength">De gebruikersnaam moet minimaal 5 karakters bevatten</string>
+    <string name="toast_pseudoChar">De gebruikersnaam uitsluitend bestaan ​​uit tekens</string>
     <string name="toastCancel">Geannuleerd</string>
+    <string name="signinInProgress">Huidige verbinding...</string>
+    <string name="userError">Onbekende gebruiker</string>
+    <string name="connect">Verbinding</string>
+    <string name="hub_begin">Start een spel</string>
+    <string name="hub_continue">Een spel hervatten</string>
 </resources>
