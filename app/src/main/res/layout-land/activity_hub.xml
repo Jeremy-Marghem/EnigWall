@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@color/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:weightSum="1"
+        android:layout_weight="0.09"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:text="@string/app_name"
+            android:layout_width="388dp"
+            android:layout_height="81dp"
+            android:textSize="30sp"
+            android:textColor="?android:attr/editTextColor"
+            android:gravity="center"
+            android:textStyle="normal|bold"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:layout_width="71dp"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView3"
+            android:background="@drawable/fed_wall" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.09"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="109dp"
+            android:layout_height="159dp"
+            android:id="@+id/welcomeTv"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="25dp"
+            android:layout_weight="0.35" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="372dp"
+            android:layout_height="231dp"
+            android:weightSum="1">
+
+            <Button
+                android:layout_width="290dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:padding="15dp"
+                android:background="@android:color/holo_green_dark"
+                android:text="@string/hub_continue"
+                android:id="@+id/continueButton"
+                android:layout_weight="0.16"
+                android:layout_height="75dp" />
+
+            <Button
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:padding="15dp"
+                android:background="@android:color/holo_green_dark"
+                android:text="@string/hub_begin"
+                android:id="@+id/beginButton"
+                android:layout_marginTop="10dp"
+                android:layout_width="290dp"
+                android:layout_height="75dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

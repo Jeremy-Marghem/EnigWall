@@ -65,6 +65,7 @@
             android:layout_marginTop="50dp"
             android:textSize="18sp"
             android:background="@android:color/holo_green_dark"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:onClick="login" />
     </LinearLayout>
 </LinearLayout>
