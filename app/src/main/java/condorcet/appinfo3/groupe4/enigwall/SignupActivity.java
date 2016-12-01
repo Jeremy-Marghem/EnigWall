@@ -24,6 +24,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText pseudoEd, mailEd, passwordEd, password2Ed;
     Utilisateur utilisateurEntre;
     private NetworkReceiver receiver;
+    public final static String IDUSER = "user";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +202,7 @@ public class SignupActivity extends AppCompatActivity {
             super.onPostExecute(aBoolean);
             if(aBoolean){
                 Intent i = new Intent(SignupActivity.this, HubActivity.class);
+                i.putExtra(IDUSER,utilisateurEntre);
                 startActivity(i); //ON PASSE A L'ACTIVITE HUB
                 finish(); //ON DETRUIT L'ACTIVITE SIGNUP
             } else {

@@ -1,6 +1,9 @@
 package condorcet.appinfo3.groupe4.enigwall.Metier;
 
-public class Utilisateur {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Utilisateur implements Parcelable {
     int id_utilisateur, id_enigme, id_parcours;
     String pseudo, mail, mdp;
 
@@ -85,5 +88,40 @@ public class Utilisateur {
                 ", mail='" + mail + '\'' +
                 ", mdp='" + mdp + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id_utilisateur);
+        dest.writeInt(id_enigme);
+        dest.writeInt(id_parcours);
+        dest.writeString(pseudo);
+        dest.writeString(mail);
+        dest.writeString(mdp);
+    }
+
+    public static final Parcelable.Creator<Utilisateur> CREATOR = new Parcelable.Creator<Utilisateur>(){
+        @Override
+        public Utilisateur createFromParcel(Parcel source) {
+            return new Utilisateur(source);
+        }
+        @Override
+        public Utilisateur[] newArray(int size) {
+            return new Utilisateur[size];
+        }
+    };
+
+    public Utilisateur(Parcel in){
+        id_utilisateur = in.readInt();
+        id_enigme = in.readInt();
+        id_parcours = in.readInt();
+        pseudo = in.readString();
+        mail = in.readString();
+        mdp = in.readString();
     }
 }

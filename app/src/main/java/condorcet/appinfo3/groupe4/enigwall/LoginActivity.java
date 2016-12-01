@@ -17,6 +17,7 @@ public class LoginActivity extends Activity {
 
     Utilisateur utilisateurConnect;
     EditText pseudoEd, passwordEd;
+    public final static String IDUSER = "user";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class LoginActivity extends Activity {
             super.onPostExecute(aBoolean);
             if(aBoolean){
                 Intent i = new Intent(LoginActivity.this, HubActivity.class);
+                i.putExtra(IDUSER,utilisateurConnect);
                 startActivity(i); //ON PASSE A L'ACTIVITE HUB
                 finish(); //ON DETRUIT L'ACTIVITE LOGIN
             } else {

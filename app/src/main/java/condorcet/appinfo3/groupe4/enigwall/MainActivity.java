@@ -34,13 +34,11 @@ public class MainActivity extends Activity {
     public void signup(View v){
         Intent i = new Intent(MainActivity.this, SignupActivity.class);
         startActivity(i); //ON PASSE A L'ACTIVITE HUB
-        finish();
     }
 
     public void login(View v) {
         Intent i = new Intent(MainActivity.this,LoginActivity.class);
         startActivity(i); //ON PASSE A L'ACTIVITE LOGIN
-        finish();
     }
 
     private class NetworkReceiver extends BroadcastReceiver {
