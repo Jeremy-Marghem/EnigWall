@@ -5,7 +5,7 @@ import condorcet.appinfo3.groupe4.enigwall.DAO.ServiceApex;
 import condorcet.appinfo3.groupe4.enigwall.DAO.UtilisateurDAO;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Utilisateur;
 
-public class TestApex {
+public class ClientTestApex {
     public static void main(String[] args) {
         // Singleton
         WebResource service = ServiceApex.getInstance();
@@ -20,7 +20,7 @@ public class TestApex {
         }
 
         // CREATION d'un nouvel utilisateur si on reçoit son ID c'est ok si on reçoit 0 c'est que l'utilisateur existe déjà
-        Utilisateur utilisateur = new Utilisateur("maxime7", "maxime7@louette.com", "test");
+        Utilisateur utilisateur = new Utilisateur("maxime", "maxime@louette.com", "test");
 
         System.out.println("-- Création --");
         try {
@@ -31,7 +31,7 @@ public class TestApex {
             System.err.println(e.getMessage());
         }
 
-        utilisateur = new Utilisateur("maxime", "maxime@louette.com", "test");
+        utilisateur = new Utilisateur("maxime7", "maxime@louette.com", "test");
 
         // CheckPseudo
         System.out.println("-- CHECKPSEUDO --");
@@ -59,7 +59,7 @@ public class TestApex {
             System.err.println(e.getMessage());
         }
 
-        utilisateur = new Utilisateur("mathias", "test");
+        utilisateur = new Utilisateur("maxime", "test");
 
         // Connexion
         System.out.println("-- Connexion --");
@@ -80,5 +80,15 @@ public class TestApex {
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
+
+        // Delete
+        System.out.println("-- DELETE --");
+        try {
+            utilisateurDAO.delete(utilisateur);
+            System.out.println("Utilisateur supprimé !");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
     }
 }

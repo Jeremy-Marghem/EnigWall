@@ -27,7 +27,7 @@ public class LoginActivity extends Activity {
         passwordEd = (EditText)findViewById(R.id.passwordEdLogin);
     }
     public void login(View v){
-        utilisateurConnect = new Utilisateur(pseudoEd.getText().toString(),passwordEd.getText().toString());
+        utilisateurConnect = new Utilisateur(pseudoEd.getText().toString().trim(),passwordEd.getText().toString());
         Connect connect = new Connect(LoginActivity.this);
         connect.execute();
     }

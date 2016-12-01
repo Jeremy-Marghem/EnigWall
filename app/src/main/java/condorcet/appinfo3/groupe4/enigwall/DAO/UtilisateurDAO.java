@@ -1,13 +1,11 @@
 package condorcet.appinfo3.groupe4.enigwall.DAO;
 
-import com.google.gson.Gson;
 import com.sun.jersey.api.client.ClientResponse;
 import java.security.MessageDigest;
 import javax.ws.rs.core.MultivaluedMap;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Utilisateur;
 
 public class UtilisateurDAO extends DAO<Utilisateur> {
-    private Gson gson = new Gson();
 
     /**
      * Méthode permettant de récuper les informations d'un utilisateur grâce à son id
@@ -71,6 +69,32 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
         }
 
         ClientResponse response = service.path("updateUser/").type("application/json").put(ClientResponse.class, json);
+        int status = response.getStatus();
+        MultivaluedMap h = response.getHeaders();
+
+        if(status >=400){
+            throw new Exception("L'utilisateur n'existe pas !");
+        }
+    }
+
+    /**
+     * Méthode permettant de supprimer un utilisateur
+     * @param l'utilisateur à supprimer
+     * @throws si l'utilisateur n'existe pas, une exception est levée
+     */
+    @Override
+    public void delete(Utilisateur obj) throws Exception {
+        Utilisateur utilisateur = obj;
+        String json = "";
+
+        try{
+            json = gson.toJson(utilisateur);
+        }
+        catch(Exception e){
+            throw new Exception("Erreur de conversion JSON");
+        }
+
+        ClientResponse response = service.path("deleteUser/").type("application/json").delete(ClientResponse.class, json);
         int status = response.getStatus();
         MultivaluedMap h = response.getHeaders();
 
