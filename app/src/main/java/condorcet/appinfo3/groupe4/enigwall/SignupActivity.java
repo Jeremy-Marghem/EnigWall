@@ -202,7 +202,7 @@ public class SignupActivity extends AppCompatActivity {
             super.onPostExecute(aBoolean);
             if(aBoolean){
                 Intent i = new Intent(SignupActivity.this, HubActivity.class);
-                i.putExtra(IDUSER,utilisateurEntre);
+                i.putExtra(IDUSER, utilisateurEntre);
                 startActivity(i); //ON PASSE A L'ACTIVITE HUB
                 finish(); //ON DETRUIT L'ACTIVITE SIGNUP
             } else {

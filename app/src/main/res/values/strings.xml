@@ -20,7 +20,7 @@
     <string name="toast_pseudoChar">Le pseudo doit être uniquement composé de caractères alphabétiques</string>
     <string name="toastCancel">Annulé</string>
     <string name="signinInProgress">Connexion en cours...</string>
-    <string name="userError">Utilisateur inconnue</string>
+    <string name="userError">Utilisateur inconnu</string>
     <string name="connect">Connexion</string>
     <string name="hub_begin">Commencer une partie</string>
     <string name="hub_continue">Reprendre une partie</string>

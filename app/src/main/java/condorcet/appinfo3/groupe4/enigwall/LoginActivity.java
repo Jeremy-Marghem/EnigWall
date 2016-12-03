@@ -2,21 +2,26 @@ package condorcet.appinfo3.groupe4.enigwall;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import condorcet.appinfo3.groupe4.enigwall.DAO.UtilisateurDAO;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Utilisateur;
 
 public class LoginActivity extends Activity {
-
+    Button connexion;
     Utilisateur utilisateurConnect;
     EditText pseudoEd, passwordEd;
+    private NetworkReceiver receiver;
     public final static String IDUSER = "user";
 
     @Override
@@ -26,7 +31,14 @@ public class LoginActivity extends Activity {
 
         pseudoEd = (EditText)findViewById(R.id.pseudoEdLogin);
         passwordEd = (EditText)findViewById(R.id.passwordEdLogin);
+        connexion = (Button)findViewById(R.id.loginButton);
+
+        // Vérification en temps réel de la connexion
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new NetworkReceiver();
+        this.registerReceiver(receiver, filter);
     }
+
     public void login(View v){
         utilisateurConnect = new Utilisateur(pseudoEd.getText().toString().trim(),passwordEd.getText().toString());
         Connect connect = new Connect(LoginActivity.this);
@@ -65,7 +77,6 @@ public class LoginActivity extends Activity {
             try {
                 utilisateurConnect = utilisateurDAO.connexion(utilisateurConnect);
             } catch (Exception e) {
-                Log.i("ERROR",e.getMessage());
                 reussi= false;
                 msgError = getResources().getString(R.string.userError);
             }
@@ -78,7 +89,7 @@ public class LoginActivity extends Activity {
             super.onPostExecute(aBoolean);
             if(aBoolean){
                 Intent i = new Intent(LoginActivity.this, HubActivity.class);
-                i.putExtra(IDUSER,utilisateurConnect);
+                i.putExtra(IDUSER, utilisateurConnect);
                 startActivity(i); //ON PASSE A L'ACTIVITE HUB
                 finish(); //ON DETRUIT L'ACTIVITE LOGIN
             } else {
@@ -92,6 +103,26 @@ public class LoginActivity extends Activity {
         protected void onCancelled() {
             Toast toast = Toast.makeText(LoginActivity.this,getResources().getString(R.string.toastCancel),Toast.LENGTH_SHORT);
             toast.show();
+        }
+    }
+
+    private class NetworkReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+            // Si aucune connexion n'est trouvée, on affiche un toast
+            if (networkInfo == null || !networkInfo.isAvailable() || !networkInfo.isConnected()) {
+                Toast toast = Toast.makeText(LoginActivity.this, getResources().getText(R.string.connexionError), Toast.LENGTH_SHORT);
+                toast.show();
+                // On désactive les boutons
+                connexion.setEnabled(false);
+            } else {
+                // On active les boutons
+                connexion.setEnabled(true);
+            }
         }
     }
 }
