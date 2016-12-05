@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -127,7 +128,7 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         if(verifOk){
-            utilisateurEntre = new Utilisateur(pseudoEd.getText().toString(),mailEd.getText().toString(),passwordEd.getText().toString());
+            utilisateurEntre = new Utilisateur(pseudoEd.getText().toString().toLowerCase(),mailEd.getText().toString(),passwordEd.getText().toString());
             Verification verification = new Verification(SignupActivity.this);
             verification.execute();
         }
@@ -149,6 +150,8 @@ public class SignupActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+            // Désactive l'orientation
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
             ////CREATION D'UNE BOITE DE DIALOGUE
             pd = new ProgressDialog(SignupActivity.this);
             pd.setMessage(SignupActivity.this.getResources().getString(R.string.signupInProgress));
@@ -200,6 +203,9 @@ public class SignupActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
+            // Réactive l'orientation
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
             if(aBoolean){
                 Intent i = new Intent(SignupActivity.this, HubActivity.class);
                 i.putExtra(IDUSER, utilisateurEntre);

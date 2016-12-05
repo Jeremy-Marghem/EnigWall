@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -40,7 +41,8 @@ public class LoginActivity extends Activity {
     }
 
     public void login(View v){
-        utilisateurConnect = new Utilisateur(pseudoEd.getText().toString().trim(),passwordEd.getText().toString());
+        // Méthide trim pour retirer les espaces
+        utilisateurConnect = new Utilisateur(pseudoEd.getText().toString().trim().toLowerCase(),passwordEd.getText().toString());
         Connect connect = new Connect(LoginActivity.this);
         connect.execute();
     }
@@ -62,6 +64,8 @@ public class LoginActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
+            // Désactive l'orientation
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
             ////CREATION D'UNE BOITE DE DIALOGUE
             pd = new ProgressDialog(LoginActivity.this);
             pd.setMessage(LoginActivity.this.getResources().getString(R.string.signinInProgress));
@@ -87,6 +91,9 @@ public class LoginActivity extends Activity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
+            // Réactive l'orientation
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
             if(aBoolean){
                 Intent i = new Intent(LoginActivity.this, HubActivity.class);
                 i.putExtra(IDUSER, utilisateurConnect);

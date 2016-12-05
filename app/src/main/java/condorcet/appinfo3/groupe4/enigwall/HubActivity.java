@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -36,7 +38,7 @@ public class HubActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hub);
 
         welcome = (TextView) findViewById(R.id.welcomeTv);
-        welcome.setText(getResources().getString(R.string.hub_connectMsg)+ " " + utilisateur.getPseudo() + " !");
+        welcome.setText(getResources().getString(R.string.hub_connectMsg)+ " " + utilisateur.getPseudo().substring(0,1).toUpperCase() + utilisateur.getPseudo().substring(1) + " !");
         commencer = (Button)findViewById(R.id.beginButton);
         reprendre = (Button)findViewById(R.id.continueButton);
 
@@ -54,14 +56,18 @@ public class HubActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.menu_hub_del:
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(HubActivity.this);
 
-                builder.setTitle(getResources().getString(R.string.hub_del_cpt))
-                        .setNegativeButton(getResources().getString(R.string.hub_but_cancel), new DialogInterface.OnClickListener() {
+                TextView mytitle = new TextView(this);
+                mytitle.setText(getResources().getString(R.string.hub_del_cpt));
+                mytitle.setTextSize(20);
+                mytitle.setPadding(35, 15, 15, 15);
+                mytitle.setTypeface(Typeface.DEFAULT_BOLD);
+
+                builder.setNegativeButton(getResources().getString(R.string.hub_but_cancel), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                             }
@@ -75,7 +81,7 @@ public class HubActivity extends AppCompatActivity {
                                 startActivity(in);
                             }
                         });
-
+                builder.setCustomTitle(mytitle);
                 builder.show();
 
                 return true;
@@ -83,8 +89,13 @@ public class HubActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder2 = new AlertDialog.Builder(HubActivity.this);
 
-                builder2.setTitle(getResources().getString(R.string.hub_signoff))
-                        .setNegativeButton(getResources().getString(R.string.hub_signoff_cancel), new DialogInterface.OnClickListener() {
+                TextView mytitle2 = new TextView(this);
+                mytitle2.setText(getResources().getString(R.string.hub_signoff));
+                mytitle2.setTextSize(20);
+                mytitle2.setPadding(35, 15, 15, 15);
+                mytitle2.setTypeface(Typeface.DEFAULT_BOLD);
+
+                builder2.setNegativeButton(getResources().getString(R.string.hub_signoff_cancel), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                             }
@@ -97,7 +108,7 @@ public class HubActivity extends AppCompatActivity {
                                 startActivity(in);
                             }
                         });
-
+                builder2.setCustomTitle(mytitle2);
                 builder2.show();
 
                 return true;
@@ -122,6 +133,8 @@ public class HubActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+            // Désactive l'orientation
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
             ////CREATION D'UNE BOITE DE DIALOGUE
             pd = new ProgressDialog(HubActivity.this);
             pd.setMessage(getResources().getString(R.string.hub_del_advert));
@@ -147,6 +160,9 @@ public class HubActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
+            // Réactive l'orientation
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
             if (aBoolean) {
                 Intent i = new Intent(HubActivity.this, MainActivity.class);
                 startActivity(i); //ON PASSE A L'ACTIVITE MAIN
