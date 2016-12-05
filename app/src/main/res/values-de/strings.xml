@@ -25,4 +25,16 @@
     <string name="connect">Verbindung</string>
     <string name="hub_begin">Starten eines Spiels</string>
     <string name="hub_continue">Spiel wieder aufnehmen</string>
+    <string name="hub_connectMsg">Willkomen</string>
+    <string name="hub_del_cpt">" ACHTUNG! Dies wird Ihr Konto und Ihre Fortschritte im Spiel zu löschen!"</string>
+    <string name="hub_but_cancel">STORNIEREN</string>
+    <string name="hub_but_del">LÖSCHEN</string>
+    <string name="hub_signoff">Haben Sie trennen Sie wirklich?</string>
+    <string name="hub_signoff_cancel">STORNIEREN</string>
+    <string name="hub_signoff_del">TRENNUNG</string>
+    <string name="hub_del_advert">AUSGLEICH IN PROGRESS ...</string>
+    <string name="hub_del_error">Fehler könnten wir Ihr Konto nicht löschen</string>
+    <string name="menu_del_cpt">Konto löschen</string>
+    <string name="menu_signoff">Ausloggen</string>
+
 </resources>

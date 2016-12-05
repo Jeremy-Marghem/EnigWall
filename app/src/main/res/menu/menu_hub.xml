@@ -4,9 +4,9 @@
     <item
         android:id="@+id/menu_hub_del"
         app:showAsAction="never"
-        android:title="Supprimer compte"/>
+        android:title="@string/menu_del_cpt"/>
     <item
         android:id="@+id/menu_hub_deco"
         app:showAsAction="never"
-        android:title="Se deconnecter"/>
+        android:title="@string/menu_signoff"/>
 </menu>

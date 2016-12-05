@@ -24,5 +24,15 @@
     <string name="connect">Connexion</string>
     <string name="hub_begin">Commencer une partie</string>
     <string name="hub_continue">Reprendre une partie</string>
-
+    <string name="hub_connectMsg">Bienvenue</string>
+    <string name="hub_del_cpt">ATTENTION! Ceci supprimera votre compte ainsi que votre progression dans le jeu!</string>
+    <string name="hub_but_cancel">ANNULER</string>
+    <string name="hub_but_del">SUPPRIMER</string>
+    <string name="hub_signoff">Voulez-vous vraiment vous deconnecter?</string>
+    <string name="hub_signoff_cancel">ANNULER</string>
+    <string name="hub_signoff_del">DECONNEXION</string>
+    <string name="hub_del_advert">SUPRESSION EN COURS...</string>
+    <string name="hub_del_error">Erreur, nous n\'avons pas pu supprimer votre compte</string>
+    <string name="menu_del_cpt">Supprimer compte</string>
+    <string name="menu_signoff">Se déconnecter</string>
 </resources>

@@ -25,4 +25,15 @@
     <string name="connect">Verbinding</string>
     <string name="hub_begin">Start een spel</string>
     <string name="hub_continue">Een spel hervatten</string>
+    <string name="hub_connectMsg">Welkom</string>
+    <string name="hub_del_cpt">" LET OP! Dit zal uw account en je voortgang in het spel te verwijderen!"</string>
+    <string name="hub_but_cancel">ANNULEREN</string>
+    <string name="hub_but_del">VERWIJDEREN</string>
+    <string name="hub_signoff">Wil je echt je los te koppelen?</string>
+    <string name="hub_signoff_cancel">ANNULEREN</string>
+    <string name="hub_signoff_del">VERBREKING</string>
+    <string name="hub_del_advert">VERWIJDEREN BEZIG</string>
+    <string name="hub_del_error">Fout, kunnen we niet verwijderen van uw account</string>
+    <string name="menu_del_cpt">Account verwijderen</string>
+    <string name="menu_signoff">Afmelden</string>
 </resources>

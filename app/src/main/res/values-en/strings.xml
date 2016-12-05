@@ -25,4 +25,16 @@
     <string name="connect">Connection</string>
     <string name="hub_begin">Start a game</string>
     <string name="hub_continue">Resume a game</string>
+    <string name="hub_connectMsg">Welcome</string>
+    <string name="hub_del_cpt">" WARNING! This will delete your account as well as your progress in the game!"</string>
+    <string name="hub_but_cancel">CANCEL</string>
+    <string name="hub_but_del">DELETE</string>
+    <string name="hub_signoff">Are you sure you want to sign out?</string>
+    <string name="hub_signoff_cancel">CANCEL</string>
+    <string name="hub_signoff_del">DISCONNECTING</string>
+    <string name="hub_del_advert">SUPRESSION IN PROGRESS ...</string>
+    <string name="hub_del_error">Error, we could not delete your account</string>
+    <string name="menu_del_cpt">Delete account</string>
+    <string name="menu_signoff">Sign out</string>
+
 </resources>

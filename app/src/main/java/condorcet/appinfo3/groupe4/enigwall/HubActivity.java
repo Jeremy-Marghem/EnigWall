@@ -36,7 +36,7 @@ public class HubActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hub);
 
         welcome = (TextView) findViewById(R.id.welcomeTv);
-        welcome.setText("Bienvenue" + " " + utilisateur.getPseudo() + " !");
+        welcome.setText(getResources().getString(R.string.hub_connectMsg)+ " " + utilisateur.getPseudo() + " !");
         commencer = (Button)findViewById(R.id.beginButton);
         reprendre = (Button)findViewById(R.id.continueButton);
 
@@ -60,13 +60,13 @@ public class HubActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(HubActivity.this);
 
-                builder.setTitle("ATTENTION! Ceci supprimera votre compte ainsi que votre progression dans le jeu!")
-                        .setNegativeButton("ANNULER", new DialogInterface.OnClickListener() {
+                builder.setTitle(getResources().getString(R.string.hub_del_cpt))
+                        .setNegativeButton(getResources().getString(R.string.hub_but_cancel), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                             }
                         })
-                        .setPositiveButton("SUPPRIMER", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getResources().getString(R.string.hub_but_del), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 DeleteUser delete = new DeleteUser(HubActivity.this);
@@ -83,13 +83,13 @@ public class HubActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder2 = new AlertDialog.Builder(HubActivity.this);
 
-                builder2.setTitle("Voulez-vous vraiment vous deconnecter?")
-                        .setNegativeButton("ANNULER", new DialogInterface.OnClickListener() {
+                builder2.setTitle(getResources().getString(R.string.hub_signoff))
+                        .setNegativeButton(getResources().getString(R.string.hub_signoff_cancel), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                             }
                         })
-                        .setPositiveButton("DECONNEXION", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getResources().getString(R.string.hub_signoff_del), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 utilisateur = null;
@@ -124,7 +124,7 @@ public class HubActivity extends AppCompatActivity {
         protected void onPreExecute() {
             ////CREATION D'UNE BOITE DE DIALOGUE
             pd = new ProgressDialog(HubActivity.this);
-            pd.setMessage("SUPRESSION EN COURS...");
+            pd.setMessage(getResources().getString(R.string.hub_del_advert));
             pd.setCancelable(false); //ON EMPECHE L'UTILISATION DU BOUTON BACK
             pd.show();
         }
@@ -138,7 +138,7 @@ public class HubActivity extends AppCompatActivity {
                 utilisateurDAO.delete(utilisateur);
             } catch (Exception e) {
                 reussi = false;
-                msgError = "Erreur, nous n'avons pas pu supprimer votre compte";
+                msgError = getResources().getString(R.string.hub_del_error);
             }
 
             return reussi;
