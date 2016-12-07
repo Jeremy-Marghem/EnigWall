@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:id="@+id/messageTr"
+        android:gravity="center"
+        android:layout_marginTop="15sp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="VOTE GROS PORC!"
+            android:layout_width="wrap_content"
+            android:id="@+id/messageRatingTv"
+            android:layout_margin="20sp" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rateTr"
+        android:gravity="center"
+        android:layout_marginTop="25sp">
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar"
+            style="@android:style/Widget.RatingBar" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/validTr"
+        android:gravity="center"
+        android:layout_marginTop="40sp">
+
+        <Button
+            android:text="VOTER"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/RatingValidButton" />
+    </TableRow>
+</TableLayout>

@@ -46,7 +46,8 @@
         android:padding="25dp"
         android:background="@android:color/holo_green_dark"
         android:text="@string/hub_continue"
-        android:id="@+id/continueButton" />
+        android:id="@+id/continueButton"
+        android:onClick="rate" />
 
     <Button
         android:layout_height="wrap_content"
@@ -58,7 +59,8 @@
         android:padding="25dp"
         android:background="@android:color/holo_green_dark"
         android:text="@string/hub_begin"
-        android:id="@+id/beginButton" />
+        android:id="@+id/beginButton"
+        android:onClick="play" />
 
     <TextView
         android:layout_width="match_parent"

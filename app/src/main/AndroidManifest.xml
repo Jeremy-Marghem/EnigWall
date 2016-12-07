@@ -29,5 +29,11 @@
         <activity android:name=".LoginActivity"
             android:label="Connexion">
         </activity>
+        <activity android:name=".GameActivity"
+            android:label="Game">
+        </activity>
+        <activity android:name=".RateActivity"
+            android:label="Rate">
+        </activity>
     </application>
 </manifest>

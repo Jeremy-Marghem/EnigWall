@@ -7,4 +7,5 @@ Pas de gestion des énigmes (encodage en dur dans la bdd).
 
 
 * SPRINT 1 : Done
-* SPRINT 2 : Work In Progress
+* SPRINT 2 : Done
+* SPRINT 3 : Work In Progress

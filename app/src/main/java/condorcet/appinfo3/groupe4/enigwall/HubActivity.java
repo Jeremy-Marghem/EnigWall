@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -201,5 +202,15 @@ public class HubActivity extends AppCompatActivity {
                 reprendre.setEnabled(true);
             }
         }
+    }
+
+    public void play (View v){
+        Intent i = new Intent(HubActivity.this,GameActivity.class);
+        startActivity(i);
+    }
+
+    public void rate(View v){
+        Intent i = new Intent(HubActivity.this,RateActivity.class);
+        startActivity(i);
     }
 }

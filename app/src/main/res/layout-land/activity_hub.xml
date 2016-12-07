@@ -70,7 +70,8 @@
                 android:text="@string/hub_continue"
                 android:id="@+id/continueButton"
                 android:layout_weight="0.16"
-                android:layout_height="75dp" />
+                android:layout_height="75dp"
+                android:onClick="rate (HubActivity)" />
 
             <Button
                 android:layout_gravity="center"
@@ -82,7 +83,8 @@
                 android:id="@+id/beginButton"
                 android:layout_marginTop="10dp"
                 android:layout_width="290dp"
-                android:layout_height="75dp" />
+                android:layout_height="75dp"
+                android:onClick="play (HubActivity)" />
         </LinearLayout>
 
     </LinearLayout>
