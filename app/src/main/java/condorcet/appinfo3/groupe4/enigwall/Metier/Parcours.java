@@ -2,12 +2,17 @@ package condorcet.appinfo3.groupe4.enigwall.Metier;
 
 public class Parcours {
     int id_parcours, id_ville;
-    String nom_parcours;
+    String nomparcours;
 
-    public Parcours(int id_parcours, int id_ville, String nom_parcours) {
+    public Parcours(int id_parcours, int id_ville, String nomparcours) {
         this.id_parcours = id_parcours;
         this.id_ville = id_ville;
-        this.nom_parcours = nom_parcours;
+        this.nomparcours = nomparcours;
+    }
+
+    public Parcours(int id_ville, String nomparcours) {
+        this.id_ville = id_ville;
+        this.nomparcours = nomparcours;
     }
 
     public int getId_parcours() {
@@ -26,12 +31,12 @@ public class Parcours {
         this.id_ville = id_ville;
     }
 
-    public String getNom_parcours() {
-        return nom_parcours;
+    public String getNomparcours() {
+        return nomparcours;
     }
 
-    public void setNom_parcours(String nom_parcours) {
-        this.nom_parcours = nom_parcours;
+    public void setNomparcours(String nomparcours) {
+        this.nomparcours = nomparcours;
     }
 
     @Override
@@ -39,7 +44,7 @@ public class Parcours {
         return "Parcours{" +
                 "id_parcours=" + id_parcours +
                 ", id_ville=" + id_ville +
-                ", nom_parcours='" + nom_parcours + '\'' +
+                ", nomparcours='" + nomparcours + '\'' +
                 '}';
     }
 }

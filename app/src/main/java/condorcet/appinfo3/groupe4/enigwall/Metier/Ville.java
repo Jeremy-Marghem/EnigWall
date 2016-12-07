@@ -2,14 +2,15 @@ package condorcet.appinfo3.groupe4.enigwall.Metier;
 
 public class Ville {
     int id_ville;
-    String nom_ville;
-    double latitude, longitude;
+    String nomville;
 
-    public Ville(int id_ville, String nom_ville, double latitude, double longitude) {
+    public Ville(String nomville) {
+        this.nomville = nomville;
+    }
+
+    public Ville(int id_ville, String nomville) {
         this.id_ville = id_ville;
-        this.nom_ville = nom_ville;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.nomville = nomville;
     }
 
     public int getId_ville() {
@@ -20,27 +21,19 @@ public class Ville {
         this.id_ville = id_ville;
     }
 
-    public String getNom_ville() {
-        return nom_ville;
+    public String getNomville() {
+        return nomville;
     }
 
-    public void setNom_ville(String nom_ville) {
-        this.nom_ville = nom_ville;
+    public void setNomville(String nomville) {
+        this.nomville = nomville;
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    @Override
+    public String toString() {
+        return "Ville{" +
+                "id_ville=" + id_ville +
+                ", nomville='" + nomville + '\'' +
+                '}';
     }
 }

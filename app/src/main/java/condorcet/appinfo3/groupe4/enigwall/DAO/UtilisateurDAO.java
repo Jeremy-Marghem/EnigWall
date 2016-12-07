@@ -8,13 +8,13 @@ import condorcet.appinfo3.groupe4.enigwall.Metier.Utilisateur;
 public class UtilisateurDAO extends DAO<Utilisateur> {
 
     /**
-     * Méthode permettant de récuper les informations d'un utilisateur grâce à son id
+     * Méthode permettant de récupérer les informations d'un utilisateur grâce à son id
      * @param id de l'utilisateur
      * @return l'utilisateur lu
      */
     @Override
     public Utilisateur read(String id) throws Exception {
-        String utl = service.path("info/"+id).get(String.class);
+        String utl = service.path("infoUser/"+id).get(String.class);
         Utilisateur utilisateur = gson.fromJson(utl, Utilisateur.class);
 
         return utilisateur;

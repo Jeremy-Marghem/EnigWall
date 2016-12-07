@@ -1,4 +1,4 @@
-package condorcet.appinfo3.groupe4.enigwall;
+package condorcet.appinfo3.groupe4.enigwall.TestApex;
 
 import com.sun.jersey.api.client.WebResource;
 import condorcet.appinfo3.groupe4.enigwall.DAO.ServiceApex;
@@ -11,7 +11,8 @@ public class ClientTestApex {
         WebResource service = ServiceApex.getInstance();
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
 
-        System.out.println("-- Recherche --");
+        // Lecture simple
+        System.out.println("-- LECTURE --");
         try {
             Utilisateur utilisateur = utilisateurDAO.read("1");
             System.out.println("Utilisateur lu : " +utilisateur);
@@ -19,10 +20,9 @@ public class ClientTestApex {
             System.err.println(e.getMessage());
         }
 
-        // CREATION d'un nouvel utilisateur si on reçoit son ID c'est ok si on reçoit 0 c'est que l'utilisateur existe déjà
+        // Création d'un nouvel utilisateur si on reçoit son ID c'est ok si on reçoit 0 c'est que l'utilisateur existe déjà
         Utilisateur utilisateur = new Utilisateur("maxime", "maxime@louette.com", "test");
-
-        System.out.println("-- Création --");
+        System.out.println("-- CREATION --");
         try {
             int r = utilisateurDAO.create(utilisateur);
             System.out.println("L'utilisateur a bien été créé !");
@@ -62,7 +62,7 @@ public class ClientTestApex {
         utilisateur = new Utilisateur("maxime", "test");
 
         // Connexion
-        System.out.println("-- Connexion --");
+        System.out.println("-- CONNEXION --");
         try {
             utilisateur = utilisateurDAO.connexion(utilisateur);
             System.out.println(utilisateur);
@@ -89,6 +89,5 @@ public class ClientTestApex {
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
-
     }
 }

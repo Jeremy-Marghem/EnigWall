@@ -1,31 +1,44 @@
 package condorcet.appinfo3.groupe4.enigwall.Metier;
 
 public class Enigme {
-    int id_egnime, id_parcours;
-    String nom_monument;
-    double longitude, latitude;
-    String texteFR,texteEn,texteNL,texteGR;
-    String image; //récupération par le nom avec l'URL
+    int id_enigme, id_parcours, id_enigme_suite;
+    String nommonument;
+    String coordlatitude, coordlongitude;
+    String texteenigmefr, texteenigmenl, texteenigmeger, texteenigmeen;
+    String nomimage;
 
-    public Enigme(int id_egnime, int id_parcours, String nom_monument, double longitude, double latitude, String texteFR, String texteEn, String texteNL, String texteGR, String image) {
-        this.id_egnime = id_egnime;
+    public Enigme(int id_enigme, int id_parcours, int id_enigme_suite, String nommonument, String coordlatitude, String coordlongitude, String texteenigmefr, String texteenigmenl, String texteenigmeger, String texteenigmeen, String nomimage) {
+        this.id_enigme = id_enigme;
         this.id_parcours = id_parcours;
-        this.nom_monument = nom_monument;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.texteFR = texteFR;
-        this.texteEn = texteEn;
-        this.texteNL = texteNL;
-        this.texteGR = texteGR;
-        this.image = image;
+        this.id_enigme_suite = id_enigme_suite;
+        this.nommonument = nommonument;
+        this.coordlatitude = coordlatitude;
+        this.coordlongitude = coordlongitude;
+        this.texteenigmefr = texteenigmefr;
+        this.texteenigmenl = texteenigmenl;
+        this.texteenigmeger = texteenigmeger;
+        this.texteenigmeen = texteenigmeen;
+        this.nomimage = nomimage;
     }
 
-    public int getId_egnime() {
-        return id_egnime;
+    public Enigme(int id_parcours, String nommonument, String coordlatitude, String coordlongitude, String texteenigmefr, String texteenigmenl, String texteenigmeger, String texteenigmeen, String nomimage) {
+        this.id_parcours = id_parcours;
+        this.nommonument = nommonument;
+        this.coordlatitude = coordlatitude;
+        this.coordlongitude = coordlongitude;
+        this.texteenigmefr = texteenigmefr;
+        this.texteenigmenl = texteenigmenl;
+        this.texteenigmeger = texteenigmeger;
+        this.texteenigmeen = texteenigmeen;
+        this.nomimage = nomimage;
     }
 
-    public void setId_egnime(int id_egnime) {
-        this.id_egnime = id_egnime;
+    public int getId_enigme() {
+        return id_enigme;
+    }
+
+    public void setId_enigme(int id_enigme) {
+        this.id_enigme = id_enigme;
     }
 
     public int getId_parcours() {
@@ -36,83 +49,92 @@ public class Enigme {
         this.id_parcours = id_parcours;
     }
 
-    public String getNom_monument() {
-        return nom_monument;
+    public int getId_enigme_suite() {
+        return id_enigme_suite;
     }
 
-    public void setNom_monument(String nom_monument) {
-        this.nom_monument = nom_monument;
+    public void setId_enigme_suite(int id_enigme_suite) {
+        this.id_enigme_suite = id_enigme_suite;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public String getNommonument() {
+        return nommonument;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setNommonument(String nommonument) {
+        this.nommonument = nommonument;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public String getCoordlatitude() {
+        return coordlatitude;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setCoordlatitude(String coordlatitude) {
+        this.coordlatitude = coordlatitude;
     }
 
-    public String getTexteFR() {
-        return texteFR;
+    public String getCoordlongitude() {
+        return coordlongitude;
     }
 
-    public void setTexteFR(String texteFR) {
-        this.texteFR = texteFR;
+    public void setCoordlongitude(String coordlongitude) {
+        this.coordlongitude = coordlongitude;
     }
 
-    public String getTexteEn() {
-        return texteEn;
+    public String getTexteenigmefr() {
+        return texteenigmefr;
     }
 
-    public void setTexteEn(String texteEn) {
-        this.texteEn = texteEn;
+    public void setTexteenigmefr(String texteenigmefr) {
+        this.texteenigmefr = texteenigmefr;
     }
 
-    public String getTexteNL() {
-        return texteNL;
+    public String getTexteenigmenl() {
+        return texteenigmenl;
     }
 
-    public void setTexteNL(String texteNL) {
-        this.texteNL = texteNL;
+    public void setTexteenigmenl(String texteenigmenl) {
+        this.texteenigmenl = texteenigmenl;
     }
 
-    public String getTexteGR() {
-        return texteGR;
+    public String getTexteenigmeger() {
+        return texteenigmeger;
     }
 
-    public void setTexteGR(String texteGR) {
-        this.texteGR = texteGR;
+    public void setTexteenigmeger(String texteenigmeger) {
+        this.texteenigmeger = texteenigmeger;
     }
 
-    public String getImage() {
-        return image;
+    public String getTexteenigmeen() {
+        return texteenigmeen;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setTexteenigmeen(String texteenigmeen) {
+        this.texteenigmeen = texteenigmeen;
+    }
+
+    public String getNomimage() {
+        return nomimage;
+    }
+
+    public void setNomimage(String nomimage) {
+        this.nomimage = nomimage;
     }
 
     @Override
     public String toString() {
         return "Enigme{" +
-                "id_egnime=" + id_egnime +
+                "id_enigme=" + id_enigme +
                 ", id_parcours=" + id_parcours +
-                ", nom_monument='" + nom_monument + '\'' +
-                ", longitude=" + longitude +
-                ", latitude=" + latitude +
-                ", texteFR='" + texteFR + '\'' +
-                ", texteEn='" + texteEn + '\'' +
-                ", texteNL='" + texteNL + '\'' +
-                ", texteGR='" + texteGR + '\'' +
-                ", image='" + image + '\'' +
+                ", id_enigme_suite=" + id_enigme_suite +
+                ", nommonument='" + nommonument + '\'' +
+                ", coordlatitude=" + coordlatitude +
+                ", coordlongitude=" + coordlongitude +
+                ", texteenigmefr='" + texteenigmefr + '\'' +
+                ", texteenigmenl='" + texteenigmenl + '\'' +
+                ", texteenigmeger='" + texteenigmeger + '\'' +
+                ", texteenigmeen='" + texteenigmeen + '\'' +
+                ", nomimage='" + nomimage + '\'' +
                 '}';
     }
 }
