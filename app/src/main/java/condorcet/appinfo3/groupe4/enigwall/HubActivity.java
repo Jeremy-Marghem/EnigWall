@@ -21,7 +21,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import condorcet.appinfo3.groupe4.enigwall.DAO.UtilisateurDAO;
+import condorcet.appinfo3.groupe4.enigwall.DAO.VilleDAO;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Utilisateur;
+import condorcet.appinfo3.groupe4.enigwall.Metier.Ville;
 
 public class HubActivity extends AppCompatActivity {
     Button commencer, reprendre;
@@ -29,6 +31,8 @@ public class HubActivity extends AppCompatActivity {
     TextView welcome;
     private NetworkReceiver receiver;
     public final static String IDUSER = "user";
+    public final static String IDVILLE = "ville";
+    public final static String IDSTATE = "state";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,13 +208,34 @@ public class HubActivity extends AppCompatActivity {
         }
     }
 
-    public void play (View v){
+    public void continuer (View v){
+        /*Intent i = new Intent(HubActivity.this,GameActivity.class);
+        i.putExtra(IDUSER,utilisateur);
+        startActivity(i);*/
+    }
+
+    public void commencer(View v){
         Intent i = new Intent(HubActivity.this,GameActivity.class);
+        i.putExtra(IDUSER,utilisateur);
+        i.putExtra(IDVILLE,getVille());
+        i.putExtra(IDSTATE,"commencer");
         startActivity(i);
     }
 
-    public void rate(View v){
-        Intent i = new Intent(HubActivity.this,RateActivity.class);
-        startActivity(i);
+    public Ville getVille(){
+
+        String nomville = "Tournai";
+
+        //INSERER ICI RETOUR GOOGLE MAP
+
+        Ville ville = new Ville(1,"Tournai");
+        /*VilleDAO dao = new VilleDAO();
+        try {
+            ville = dao.read(ville);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
+        return ville;
     }
 }

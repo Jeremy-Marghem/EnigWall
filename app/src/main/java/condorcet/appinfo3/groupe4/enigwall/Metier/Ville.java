@@ -1,6 +1,9 @@
 package condorcet.appinfo3.groupe4.enigwall.Metier;
 
-public class Ville {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Ville implements Parcelable {
     int id_ville;
     String nomville;
 
@@ -35,5 +38,32 @@ public class Ville {
                 "id_ville=" + id_ville +
                 ", nomville='" + nomville + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id_ville);
+        dest.writeString(nomville);
+    }
+
+    public static final Parcelable.Creator<Ville> CREATOR = new Parcelable.Creator<Ville>(){
+        @Override
+        public Ville createFromParcel(Parcel source) {
+            return new Ville(source);
+        }
+        @Override
+        public Ville[] newArray(int size) {
+            return new Ville[size];
+        }
+    };
+
+    public Ville(Parcel in){
+        id_ville = in.readInt();
+        nomville = in.readString();
     }
 }

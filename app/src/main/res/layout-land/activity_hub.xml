@@ -71,7 +71,7 @@
                 android:id="@+id/continueButton"
                 android:layout_weight="0.16"
                 android:layout_height="75dp"
-                android:onClick="rate (HubActivity)" />
+                android:onClick="continuer" />
 
             <Button
                 android:layout_gravity="center"
@@ -84,7 +84,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="290dp"
                 android:layout_height="75dp"
-                android:onClick="play (HubActivity)" />
+                android:onClick="commencer" />
         </LinearLayout>
 
     </LinearLayout>

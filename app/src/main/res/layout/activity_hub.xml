@@ -47,7 +47,7 @@
         android:background="@android:color/holo_green_dark"
         android:text="@string/hub_continue"
         android:id="@+id/continueButton"
-        android:onClick="rate" />
+        android:onClick="continuer" />
 
     <Button
         android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
         android:background="@android:color/holo_green_dark"
         android:text="@string/hub_begin"
         android:id="@+id/beginButton"
-        android:onClick="play" />
+        android:onClick="commencer" />
 
     <TextView
         android:layout_width="match_parent"
