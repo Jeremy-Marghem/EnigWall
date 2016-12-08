@@ -36,5 +36,7 @@
     <string name="hub_del_error">Error, we could not delete your account</string>
     <string name="menu_del_cpt">Delete account</string>
     <string name="menu_signoff">Sign out</string>
+    <string name="msgLocalisation">Ville</string>
+    <string name="msgLocalisationRecherche">En recherche...</string>
 
 </resources>

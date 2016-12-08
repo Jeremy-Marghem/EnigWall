@@ -8,24 +8,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Locale;
-
 import condorcet.appinfo3.groupe4.enigwall.DAO.EnigmeDAO;
 import condorcet.appinfo3.groupe4.enigwall.DAO.ParcoursDAO;
-import condorcet.appinfo3.groupe4.enigwall.DAO.UtilisateurDAO;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Enigme;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Parcours;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Utilisateur;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Ville;
-import condorcet.appinfo3.groupe4.enigwall.R;
-import layout.Game_up;
 
 public class GameActivity extends AppCompatActivity {
-
     TextView enigmeTv;
 
     public final static String IDUSER = "user";
@@ -51,6 +43,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
         i = getIntent();
         state = i.getStringExtra(HubActivity.IDSTATE);
         liste_enigme = new ArrayList<Enigme>();
@@ -59,7 +52,7 @@ public class GameActivity extends AppCompatActivity {
             utilisateur = (Utilisateur) i.getParcelableExtra(HubActivity.IDUSER);
             System.out.println("USER RECU = "+utilisateur);
             ville = (Ville) i.getParcelableExtra(HubActivity.IDVILLE);
-            System.out.println("VIlle recu = "+ville);
+            System.out.println("Ville recue = "+ville);
             id_ville = ville.getId_ville();
             System.out.println("IDVILLE = "+id_ville);
             Begin begin = new Begin(this);
@@ -69,6 +62,7 @@ public class GameActivity extends AppCompatActivity {
         if(state.equals("reprendre")){
             id_enigme = i.getIntExtra(IDENIGME, -1);
         }
+
         enigmeTv = (TextView) findViewById(R.id.enigmeTv);
     }
 

@@ -7,11 +7,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -20,16 +26,32 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import condorcet.appinfo3.groupe4.enigwall.DAO.UtilisateurDAO;
 import condorcet.appinfo3.groupe4.enigwall.DAO.VilleDAO;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Utilisateur;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Ville;
 
-public class HubActivity extends AppCompatActivity {
+public class HubActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener {
     Button commencer, reprendre;
     Utilisateur utilisateur;
-    TextView welcome;
+    TextView welcome, localisation;
     private NetworkReceiver receiver;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private Location mLastLocation;
+    ArrayList<Ville> listeVilles;
+    private Ville villeLoc;
+
     public final static String IDUSER = "user";
     public final static String IDVILLE = "ville";
     public final static String IDSTATE = "state";
@@ -44,6 +66,7 @@ public class HubActivity extends AppCompatActivity {
 
         welcome = (TextView) findViewById(R.id.welcomeTv);
         welcome.setText(getResources().getString(R.string.hub_connectMsg)+ " " + utilisateur.getPseudo().substring(0,1).toUpperCase() + utilisateur.getPseudo().substring(1) + " !");
+        localisation = (TextView) findViewById(R.id.localisationTv);
         commencer = (Button)findViewById(R.id.beginButton);
         reprendre = (Button)findViewById(R.id.continueButton);
 
@@ -51,6 +74,21 @@ public class HubActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         receiver = new NetworkReceiver();
         this.registerReceiver(receiver, filter);
+
+        // Activation instance GOOGLEAPI
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+
+        // On bloque les boutons avant les tests
+        commencer.setEnabled(false);
+        reprendre.setEnabled(false);
+
+        createLocationRequest();
     }
 
     @Override
@@ -120,6 +158,124 @@ public class HubActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    protected void displayLocation() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[] {
+                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.INTERNET }, 10);
+            }
+            return;
+        }
+
+        //mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
+        if (mLastLocation != null) {
+            String cityName = (String) getResources().getText(R.string.msgLocalisationRecherche);
+            Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
+            List<Address> addresses;
+            try {
+                addresses = gcd.getFromLocation(mLastLocation.getLatitude(),
+                        mLastLocation.getLongitude(), 1);
+                if (addresses.size() > 0) {
+                    cityName = addresses.get(0).getLocality();
+                }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // On met la ville récupérée grâce au GPS dans la textview
+            localisation.setText(getResources().getText(R.string.msgLocalisation)+" : "+cityName);
+
+            // On teste la localisation trouvée avec la liste des villes
+            for(Ville ville : listeVilles) {
+                if(ville.getNomville().equals(cityName)) {
+                    // Comme on a trouvé une ville, on réactive le bouton
+                    commencer.setEnabled(true);
+                    // On met la ville localisée pour un futur envoie à l'activité GameActivity
+                    villeLoc = ville;
+                }
+            }
+        }
+    }
+
+    protected void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[] {
+                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.INTERNET }, 10);
+            }
+            return;
+        }
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+    }
+
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    protected void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+        listeVilles = new ArrayList<Ville>();
+        GetAllVille allVille = new GetAllVille(HubActivity.this);
+        allVille.execute();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mGoogleApiClient.isConnected()) {
+            startLocationUpdates();
+        }
+    }
+
+    protected void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        displayLocation();
+        startLocationUpdates();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        mLastLocation = location;
+        displayLocation();
+    }
+
+    public void continuer(View v){
+        /*Intent i = new Intent(HubActivity.this,GameActivity.class);
+        i.putExtra(IDUSER,utilisateur);
+        startActivity(i);*/
+    }
+
+    public void commencer(View v){
+        Intent i = new Intent(HubActivity.this,GameActivity.class);
+        i.putExtra(IDUSER, utilisateur);
+        i.putExtra(IDVILLE, villeLoc);
+        i.putExtra(IDSTATE, "commencer");
+        startActivity(i);
+    }
     ///////////////////
 
     ////CLASSE INTERNE ASYNCHRONE
@@ -186,6 +342,46 @@ public class HubActivity extends AppCompatActivity {
         }
     }
 
+    // Classe asynchrone pour chercher la liste des villes dispos
+    class GetAllVille extends AsyncTask<String, Integer, Boolean> {
+        private VilleDAO villeDAO;
+
+        public GetAllVille(HubActivity pActivity) {
+            link(pActivity);
+        }
+
+        private void link(HubActivity pActivity) {
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            villeDAO = new VilleDAO();
+
+            try {
+                listeVilles = villeDAO.readAll();
+            } catch (Exception e) {
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+        }
+
+        @Override
+        protected void onCancelled() {
+        }
+    }
+    // Fin classe asynchrone villes
+
+    // Classe interne pour détection de l'internet
     private class NetworkReceiver extends BroadcastReceiver {
 
         @Override
@@ -200,42 +396,8 @@ public class HubActivity extends AppCompatActivity {
                 // On désactive les boutons
                 commencer.setEnabled(false);
                 reprendre.setEnabled(false);
-            } else {
-                // On active les boutons
-                commencer.setEnabled(true);
-                reprendre.setEnabled(true);
             }
         }
     }
-
-    public void continuer (View v){
-        /*Intent i = new Intent(HubActivity.this,GameActivity.class);
-        i.putExtra(IDUSER,utilisateur);
-        startActivity(i);*/
-    }
-
-    public void commencer(View v){
-        Intent i = new Intent(HubActivity.this,GameActivity.class);
-        i.putExtra(IDUSER,utilisateur);
-        i.putExtra(IDVILLE,getVille());
-        i.putExtra(IDSTATE,"commencer");
-        startActivity(i);
-    }
-
-    public Ville getVille(){
-
-        String nomville = "Tournai";
-
-        //INSERER ICI RETOUR GOOGLE MAP
-
-        Ville ville = new Ville(1,"Tournai");
-        /*VilleDAO dao = new VilleDAO();
-        try {
-            ville = dao.read(ville);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
-        return ville;
-    }
+    // Fin classe
 }

@@ -36,5 +36,7 @@
     <string name="hub_del_error">Fehler könnten wir Ihr Konto nicht löschen</string>
     <string name="menu_del_cpt">Konto löschen</string>
     <string name="menu_signoff">Ausloggen</string>
+    <string name="msgLocalisation">Ville</string>
+    <string name="msgLocalisationRecherche">En recherche...</string>
 
 </resources>

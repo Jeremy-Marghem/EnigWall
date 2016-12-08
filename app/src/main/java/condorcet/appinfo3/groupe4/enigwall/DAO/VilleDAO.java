@@ -1,7 +1,9 @@
 package condorcet.appinfo3.groupe4.enigwall.DAO;
 
 import com.sun.jersey.api.client.ClientResponse;
+import java.util.ArrayList;
 import javax.ws.rs.core.MultivaluedMap;
+import condorcet.appinfo3.groupe4.enigwall.Metier.Liste.ListeVille;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Ville;
 
 public class VilleDAO extends DAO<Ville>{
@@ -111,5 +113,18 @@ public class VilleDAO extends DAO<Ville>{
         Ville ville = gson.fromJson(vl, Ville.class);
 
         return ville;
+    }
+
+    /**
+     * Méthode permettant de récupérer une liste de toutes les villes
+     * @return la liste des villes
+     */
+    public ArrayList<Ville> readAll() throws Exception {
+        ArrayList<Ville> villes = new ArrayList<>();
+
+        String liste = service.path("readAllVille/").get(String.class);
+        ListeVille listeVille = gson.fromJson(liste, ListeVille.class);
+        if (listeVille.getItems().size() == 0) throw new Exception("Aucune ville !");
+        return listeVille.getItems();
     }
 }

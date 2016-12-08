@@ -36,4 +36,6 @@
     <string name="hub_del_error">Fout, kunnen we niet verwijderen van uw account</string>
     <string name="menu_del_cpt">Account verwijderen</string>
     <string name="menu_signoff">Afmelden</string>
+    <string name="msgLocalisation">Ville</string>
+    <string name="msgLocalisationRecherche">En recherche...</string>
 </resources>

@@ -52,6 +52,17 @@
             android:layout_marginLeft="25dp"
             android:layout_weight="0.35" />
 
+        <TextView
+            android:layout_width="109dp"
+            android:layout_height="159dp"
+            android:id="@+id/localisationTv"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:layout_weight="0.35"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/black" />
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="372dp"

@@ -2,6 +2,7 @@ package condorcet.appinfo3.groupe4.enigwall.TestApex;
 
 import condorcet.appinfo3.groupe4.enigwall.DAO.VilleDAO;
 import com.sun.jersey.api.client.WebResource;
+import java.util.ArrayList;
 import condorcet.appinfo3.groupe4.enigwall.DAO.ServiceApex;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Ville;
 
@@ -28,6 +29,16 @@ public class VilleTestApex {
             System.out.println("Ville lue : " +ville);
         } catch (Exception e) {
             System.err.println(e.getMessage());
+        }
+
+        // Lecture multiple
+        System.out.println("-- LECTURE MULTIPLE --");
+        try {
+            ArrayList<Ville> liste = villeDAO.readAll();
+            System.out.println(liste);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
         }
 
         // Création d'une nouvelle ville si on reçoit son ID c'est ok si on reçoit 0 c'est que la ville existe déjà

@@ -35,6 +35,8 @@
     <string name="hub_del_error">Erreur, nous n\'avons pas pu supprimer votre compte</string>
     <string name="menu_del_cpt">Supprimer compte</string>
     <string name="menu_signoff">Se déconnecter</string>
+    <string name="msgLocalisation">Ville</string>
+    <string name="msgLocalisationRecherche">En recherche...</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
