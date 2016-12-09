@@ -22,7 +22,6 @@
             android:layout_gravity="center" />
 
         <TextView
-            android:text="TEXTE ENIGME"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/enigmeTv"
@@ -31,11 +30,11 @@
             android:textColor="@android:color/black" />
 
         <TextView
-            android:text="INDICATION DE PROXIMITE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/indicationTv"
             android:layout_margin="15dp"
+            android:textSize="18sp"
             android:textColor="@android:color/black" />
     </LinearLayout>
 </FrameLayout>

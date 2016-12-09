@@ -169,8 +169,6 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
             return;
         }
 
-        //mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
         if (mLastLocation != null) {
             String cityName = (String) getResources().getText(R.string.msgLocalisationRecherche);
             Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
@@ -296,7 +294,7 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
         protected void onPreExecute() {
             // Désactive l'orientation
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-            ////CREATION D'UNE BOITE DE DIALOGUE
+            // CREATION D'UNE BOITE DE DIALOGUE
             pd = new ProgressDialog(HubActivity.this);
             pd.setMessage(getResources().getString(R.string.hub_del_advert));
             pd.setCancelable(false); //ON EMPECHE L'UTILISATION DU BOUTON BACK
@@ -326,10 +324,10 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
 
             if (aBoolean) {
                 Intent i = new Intent(HubActivity.this, MainActivity.class);
-                startActivity(i); //ON PASSE A L'ACTIVITE MAIN
-                finish(); //ON DETRUIT L'ACTIVITE HUB
+                startActivity(i); // ON PASSE A L'ACTIVITE MAIN
+                finish(); // ON DETRUIT L'ACTIVITE HUB
             } else {
-                pd.dismiss(); //ARRET DU PROGRESSDIALOG
+                pd.dismiss(); // ARRET DU PROGRESSDIALOG
                 Toast toast = Toast.makeText(HubActivity.this, msgError, Toast.LENGTH_SHORT);
                 toast.show();
             }
