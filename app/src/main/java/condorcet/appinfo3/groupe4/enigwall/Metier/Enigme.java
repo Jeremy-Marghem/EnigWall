@@ -1,6 +1,9 @@
 package condorcet.appinfo3.groupe4.enigwall.Metier;
 
-public class Enigme {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Enigme implements Parcelable{
     int id_enigme, id_parcours, id_enigme_suite;
     String nommonument;
     String coordlatitude, coordlongitude;
@@ -136,5 +139,50 @@ public class Enigme {
                 ", texteenigmeen='" + texteenigmeen + '\'' +
                 ", nomimage='" + nomimage + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id_enigme);
+        dest.writeInt(id_parcours);
+        dest.writeInt(id_enigme_suite);
+        dest.writeString(nommonument);
+        dest.writeString(coordlatitude);
+        dest.writeString(coordlongitude);
+        dest.writeString(texteenigmefr);
+        dest.writeString(texteenigmenl);
+        dest.writeString(texteenigmeger);
+        dest.writeString(texteenigmeen);
+        dest.writeString(nomimage);
+    }
+
+    public static final Parcelable.Creator<Enigme> CREATOR = new Parcelable.Creator<Enigme>(){
+        @Override
+        public Enigme createFromParcel(Parcel source) {
+            return new Enigme(source);
+        }
+        @Override
+        public Enigme[] newArray(int size) {
+            return new Enigme[size];
+        }
+    };
+
+    public Enigme(Parcel in) {
+        id_enigme = in.readInt();
+        id_parcours = in.readInt();
+        id_enigme_suite = in.readInt();
+        nommonument = in.readString();
+        coordlatitude = in.readString();
+        coordlongitude = in.readString();
+        texteenigmefr = in.readString();
+        texteenigmenl = in.readString();
+        texteenigmeger = in.readString();
+        texteenigmeen = in.readString();
+        nomimage = in.readString();
     }
 }

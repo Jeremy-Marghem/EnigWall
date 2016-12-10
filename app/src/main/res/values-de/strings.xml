@@ -38,11 +38,13 @@
     <string name="menu_signoff">Ausloggen</string>
     <string name="msgLocalisation">Ville</string>
     <string name="msgLocalisationRecherche">En recherche...</string>
-    <string name="loadgame">Chargement du jeu...</string>
+    <string name="loadgame">Chargement de l\'énigme...</string>
     <string name="msgIndicationProxi1">Vous êtes très loin de l\'objectif !</string>
     <string name="msgIndicationProxi2">Vous êtes loin de l\'objectif !</string>
     <string name="msgIndicationProxi3">Vous êtes proche de l\'objectif !</string>
     <string name="msgIndicationProxi4">Vous êtes très proche de l \'objectif !</string>
-    <string name="msgIndicationProxi5">Bravo !!</string>
+    <string name="msgIndicationProxi5">Bravo, vous avez réussi !</string>
+    <string name="nextEnigme">Enigme suivante</string>
+    <string name="voting">Passez au vote</string>
 
 </resources>

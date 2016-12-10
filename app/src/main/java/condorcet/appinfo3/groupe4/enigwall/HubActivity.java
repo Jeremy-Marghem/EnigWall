@@ -277,7 +277,6 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
     ///////////////////
 
     ////CLASSE INTERNE ASYNCHRONE
-
     class DeleteUser extends AsyncTask<String, Integer, Boolean> {
         private UtilisateurDAO utilisateurDAO;
         private ProgressDialog pd;

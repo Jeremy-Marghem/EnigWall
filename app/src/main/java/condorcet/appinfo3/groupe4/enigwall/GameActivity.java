@@ -13,6 +13,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,34 +45,31 @@ import condorcet.appinfo3.groupe4.enigwall.Metier.Ville;
 
 public class GameActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
-    TextView enigmeTv, indicationTv;
-    ImageView enigmePicture;
-    MapView mapView;
-    GoogleMap gMap;
-    URL url;
+    public TextView enigmeTv, indicationTv;
+    public ImageView enigmePicture;
+    public Button nextEnigme;
+    public MapView mapView;
+    public GoogleMap gMap;
+    public URL url;
+    public Bitmap bitmap;
+    public Utilisateur utilisateur;
+    public Ville ville;
+    public int id_ville;
+    public String state;
+    public int id_enigme;
+    public Parcours parcours;
+    public ArrayList<Enigme> listeEnigme;
+    public Enigme currentEnigme;
+    public Intent i;
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private Location mLastLocation, objectifLocation;
 
     public final static String IDUSER = "user";
     public final static String IDVILLE = "ville";
     public final static String IDSTATE = "state";
     public final static String IDENIGME = "enigme";
-
-    public Utilisateur utilisateur;
-    public Ville ville;
-    public int id_ville;
-    public String state;
-
-    public int id_enigme;
-    public Parcours parcours;
-    public ArrayList<Enigme> liste_enigme;
-    public Enigme current_enigme;
-    public int cptEnigme;
-    public int nbEnigme;
-
-    public Intent i;
-
-    private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
-    private Location mLastLocation, objectifLocation;
+    public final static String LISTE = "liste";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,24 +78,33 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
 
         i = getIntent();
         state = i.getStringExtra(HubActivity.IDSTATE);
-        liste_enigme = new ArrayList<Enigme>();
-        cptEnigme = 0;
-
-        if(state.equals("commencer")){
-            utilisateur = (Utilisateur) i.getParcelableExtra(HubActivity.IDUSER);
-            ville = (Ville) i.getParcelableExtra(HubActivity.IDVILLE);
-            id_ville = ville.getId_ville();
-            Begin begin = new Begin(this);
-            begin.execute();
-        }
-
-        if(state.equals("reprendre")){
-            id_enigme = i.getIntExtra(IDENIGME, -1);
-        }
+        listeEnigme = new ArrayList<Enigme>();
 
         enigmeTv = (TextView) findViewById(R.id.enigmeTv);
         indicationTv = (TextView) findViewById(R.id.indicationTv);
+        indicationTv.setText(getResources().getText(R.string.msgLocalisationRecherche));
         enigmePicture = (ImageView) findViewById(R.id.enigmePicture);
+        nextEnigme = (Button) findViewById(R.id.nextenigme);
+
+        if(state.equals("commencer")) {
+            utilisateur = (Utilisateur) i.getParcelableExtra(HubActivity.IDUSER);
+            ville = (Ville) i.getParcelableExtra(HubActivity.IDVILLE);
+            id_ville = ville.getId_ville();
+        }
+
+        if(state.equals("reprendre")) {
+            id_enigme = i.getIntExtra(IDENIGME, -1);
+        }
+
+        if(state.equals("suivante")) {
+            utilisateur = (Utilisateur) i.getParcelableExtra(GameActivity.IDUSER);
+            id_ville = i.getIntExtra(GameActivity.IDVILLE, -1);
+            listeEnigme = i.getParcelableArrayListExtra(GameActivity.LISTE);
+        }
+
+        // On lance l'asynctask
+        GoApplication goApplication = new GoApplication(this);
+        goApplication.execute();
 
         // Activation instance GOOGLEAPI
         if (mGoogleApiClient == null) {
@@ -110,6 +118,8 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         // Gestion de la map
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
+        // On met la carte invisible pendant le temps que les coordonnées ne sont pas chargées
+        mapView.setVisibility(View.INVISIBLE);
 
         createLocationRequest();
         objectifLocation = new Location("obj");
@@ -128,16 +138,22 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         if (mLastLocation != null) {
             double distance = mLastLocation.distanceTo(objectifLocation);
 
-            if(distance > 1000) {
+            // Gestion des distances pour affichage d'un message différent
+            // Si on est entre 0 et 25 M, le changement d'énigme est possible
+            if(distance > 1000 && distance <= 4000) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi1)+" - "+Math.round(distance)+ "M");
             } else if(distance <= 1000 && distance > 400) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi2)+" - "+Math.round(distance)+ "M");
             } else if(distance <= 400 && distance > 100) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi3)+" - "+Math.round(distance)+ "M");
-            } else if(distance <= 100 && distance > 30) {
+            } else if(distance <= 100 && distance > 25) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi4)+" - "+Math.round(distance)+ "M");
-            } else {
+            } else if(distance <= 25 && distance >= 0) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi5)+" - "+Math.round(distance)+ "M");
+                // On remet une image du monument non floutée
+                enigmePicture.setImageBitmap(bitmap);
+                // On affiche le bouton pour passer à l'énigme suivante
+                nextEnigme.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -208,22 +224,46 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
-        LatLng obj = new LatLng(Double.parseDouble(current_enigme.getCoordlatitude()),
-                Double.parseDouble(current_enigme.getCoordlongitude()));
-        gMap.addCircle(new CircleOptions().center(obj).radius(250).fillColor(Color.rgb(4, 204, 20)).strokeWidth(0));
-        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(obj, 15));
+        LatLng obj = new LatLng(Double.parseDouble(currentEnigme.getCoordlatitude()),
+                Double.parseDouble(currentEnigme.getCoordlongitude()));
+        gMap.addCircle(new CircleOptions().center(obj).radius(150).fillColor(Color.rgb(32, 102, 127)).strokeWidth(0));
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(obj, 16));
+        // On désactive le zoom sur la carte
+        gMap.getUiSettings().setZoomGesturesEnabled(false);
+        // On désactive le mouvement sur la carte
+        gMap.getUiSettings().setScrollGesturesEnabled(false);
+    }
+
+    public void enigmeSuivante(View view) {
+        /* Sauvegarde dans la BDD pas encore effectuée, utilisation asynctask */
+
+        // On retire de la liste l'énigme qui a été réussie
+        listeEnigme.remove(0);
+
+        if(listeEnigme.size() == 0) {
+            // On passe au vote puisqu'il n'y a plus d'énigmes
+            Intent intent = new Intent(GameActivity.this, RateActivity.class);
+            startActivity(intent);
+        } else {
+            // On recharge l'activité en cours avec les nouvelles valeurs
+            Intent intent = new Intent(GameActivity.this, GameActivity.class);
+            intent.putExtra(IDUSER, utilisateur);
+            intent.putExtra(IDVILLE, id_ville);
+            intent.putExtra(IDSTATE, "suivante");
+            intent.putParcelableArrayListExtra(LISTE, listeEnigme);
+            startActivity(intent);
+        }
     }
 
     ///////////////////
 
     ////CLASSE INTERNE ASYNCHRONE
-    class Begin extends AsyncTask<String, Integer, Boolean> {
+    class GoApplication extends AsyncTask<String, Integer, Boolean> {
         private ParcoursDAO parcoursDAO;
         private EnigmeDAO enigmeDAO;
         private ProgressDialog pd;
-        private Bitmap bitmap;
 
-        public Begin(GameActivity pActivity){
+        public GoApplication(GameActivity pActivity){
             link(pActivity);
         }
 
@@ -232,7 +272,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
 
         @Override
         protected void onPreExecute() {
-            // Désactive l'orientation
+            // Désactivation de l'orientation
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
             ////CREATION D'UNE BOITE DE DIALOGUE
             pd = new ProgressDialog(GameActivity.this);
@@ -243,28 +283,31 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            // RECUPERATION DU PARCOURS EN FONCTION DE LA VILLE
-            parcoursDAO = new ParcoursDAO();
-            try {
-                parcours = parcoursDAO.read(String.valueOf(id_ville));
-            } catch (Exception e) {
-                e.printStackTrace();
+            // Récupération du parcours en fonction de l'i de la ville
+            // On charge les DAO seulement si l' on a commencé une nouvelle partie
+            if(state.equals("commencer")) {
+                parcoursDAO = new ParcoursDAO();
+                try {
+                    parcours = parcoursDAO.read(String.valueOf(id_ville));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                //RECUPERATION DE LA LISTE D'ENIGMES CORRESPONDANT AU PARCOURS
+                enigmeDAO = new EnigmeDAO();
+                try {
+                    listeEnigme = enigmeDAO.readAll(String.valueOf(parcours.getId_parcours()));
+                } catch (Exception e) {
+                    return false;
+                }
             }
 
-            //RECUPERATION DE LA LISTE D'ENIGMES CORRESPONDANT AU PARCOURS
-            enigmeDAO = new EnigmeDAO();
-            try {
-                liste_enigme = enigmeDAO.readAll(String.valueOf(parcours.getId_parcours()));
-            } catch (Exception e) {
-                return false;
-            }
-
-            current_enigme = liste_enigme.get(nbEnigme); //Enigme en cours
-            nbEnigme = liste_enigme.size(); //Nombre d'enigme dans le parcours
+            // On récupère la première énigme, et ça sera l'énigme en cours
+            currentEnigme = listeEnigme.get(0);
 
             // Récupération de l'image via le site
             try {
-                String lien = "http://www.enigwall.esy.es/app/"+current_enigme.getNomimage();
+                String lien = "http://www.enigwall.esy.es/app/"+id_ville+"/"+currentEnigme.getNomimage();
                 url = new URL(lien);
 
                 URLConnection connection = url.openConnection();
@@ -281,24 +324,32 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            // Réactive l'orientation
+            // Réactivation de l'orientation
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
             //------------> INSERER ICI UN SWITCH POUR CHOISIR LE TEXTE EN FONCTION DE LA LANGUE DU GSM
-            switch (Locale.getDefault().getLanguage()){
+            switch (Locale.getDefault().getLanguage()) {
                 case "fr":
-                    enigmeTv.setText(current_enigme.getTexteenigmefr());
+                    enigmeTv.setText(currentEnigme.getTexteenigmefr());
                     break;
                 case "en":
-                    enigmeTv.setText(current_enigme.getTexteenigmeen());
+                    enigmeTv.setText(currentEnigme.getTexteenigmeen());
                     break;
             }
 
-            // On met les coordonnées
-            objectifLocation.setLatitude(Double.parseDouble(current_enigme.getCoordlatitude()));
-            objectifLocation.setLongitude(Double.parseDouble(current_enigme.getCoordlongitude()));
+            // On met les coordonnées GPS
+            objectifLocation.setLatitude(Double.parseDouble(currentEnigme.getCoordlatitude()));
+            objectifLocation.setLongitude(Double.parseDouble(currentEnigme.getCoordlongitude()));
             mapView.getMapAsync(GameActivity.this);
+            // On active la visibilité de la carte
+            mapView.setVisibility(View.VISIBLE);
 
-            // On met l'image
+            // Si c'est la dernière énigme on change le texte du bouton
+            if (listeEnigme.size() == 1) {
+                nextEnigme.setText(getResources().getText(R.string.voting));
+            }
+
+            // On affiche l'image
             enigmePicture.setImageBitmap(bitmap);
 
             pd.dismiss();
