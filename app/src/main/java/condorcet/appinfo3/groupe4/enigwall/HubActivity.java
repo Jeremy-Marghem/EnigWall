@@ -276,6 +276,7 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
     public void continuer(View v){
         Intent i = new Intent(HubActivity.this, GameActivity.class);
         i.putExtra(IDUSER, utilisateur);
+        i.putExtra(IDVILLE, villeLoc);
         i.putExtra(IDSTATE, "reprendre");
         startActivity(i);
     }

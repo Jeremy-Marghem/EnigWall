@@ -101,6 +101,8 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
 
         if(state.equals("reprendre")) {
             utilisateur = (Utilisateur) i.getParcelableExtra(HubActivity.IDUSER);
+            ville = (Ville) i.getParcelableExtra(HubActivity.IDVILLE);
+            id_ville = ville.getId_ville();
             id_enigme = utilisateur.getId_enigme();
         }
 
