@@ -1,13 +1,18 @@
 package condorcet.appinfo3.groupe4.enigwall;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import condorcet.appinfo3.groupe4.enigwall.DAO.EnigmeDAO;
 import condorcet.appinfo3.groupe4.enigwall.DAO.ParcoursDAO;
+import condorcet.appinfo3.groupe4.enigwall.DAO.UtilisateurDAO;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Enigme;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Parcours;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Utilisateur;
@@ -51,7 +57,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     public MapView mapView;
     public GoogleMap gMap;
     public URL url;
-    public Bitmap bitmap;
+    public Bitmap bitmap, blur;
     public Utilisateur utilisateur;
     public Ville ville;
     public int id_ville;
@@ -64,6 +70,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private Location mLastLocation, objectifLocation;
+    private NetworkReceiver receiver;
 
     public final static String IDUSER = "user";
     public final static String IDVILLE = "ville";
@@ -93,7 +100,8 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         }
 
         if(state.equals("reprendre")) {
-            id_enigme = i.getIntExtra(IDENIGME, -1);
+            utilisateur = (Utilisateur) i.getParcelableExtra(HubActivity.IDUSER);
+            id_enigme = utilisateur.getId_enigme();
         }
 
         if(state.equals("suivante")) {
@@ -105,6 +113,11 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         // On lance l'asynctask
         GoApplication goApplication = new GoApplication(this);
         goApplication.execute();
+
+        // Vérification en temps réel de la connexion
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new NetworkReceiver();
+        this.registerReceiver(receiver, filter);
 
         // Activation instance GOOGLEAPI
         if (mGoogleApiClient == null) {
@@ -235,27 +248,12 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     public void enigmeSuivante(View view) {
-        /* Sauvegarde dans la BDD pas encore effectuée, utilisation asynctask */
-
         // On retire de la liste l'énigme qui a été réussie
         listeEnigme.remove(0);
-
-        if(listeEnigme.size() == 0) {
-            // On passe au vote puisqu'il n'y a plus d'énigmes
-            Intent intent = new Intent(GameActivity.this, RateActivity.class);
-            startActivity(intent);
-        } else {
-            // On recharge l'activité en cours avec les nouvelles valeurs
-            Intent intent = new Intent(GameActivity.this, GameActivity.class);
-            intent.putExtra(IDUSER, utilisateur);
-            intent.putExtra(IDVILLE, id_ville);
-            intent.putExtra(IDSTATE, "suivante");
-            intent.putParcelableArrayListExtra(LISTE, listeEnigme);
-            startActivity(intent);
-        }
+        // On sauvegarde l'avancement de l'utilisateur et on passe à l'énigme suivante ou au vote
+        SaveUser saveUser = new SaveUser(this);
+        saveUser.execute();
     }
-
-    ///////////////////
 
     ////CLASSE INTERNE ASYNCHRONE
     class GoApplication extends AsyncTask<String, Integer, Boolean> {
@@ -293,7 +291,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                     e.printStackTrace();
                 }
 
-                //RECUPERATION DE LA LISTE D'ENIGMES CORRESPONDANT AU PARCOURS
+                // Récupération de la liste d'énigmes suivant le parcours
                 enigmeDAO = new EnigmeDAO();
                 try {
                     listeEnigme = enigmeDAO.readAll(String.valueOf(parcours.getId_parcours()));
@@ -302,10 +300,22 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
             }
 
+            if(state.equals("reprendre")) {
+                // Récupération de la liste d'énigmes suivant le parcours et l'id de l'énigme suivante
+                enigmeDAO = new EnigmeDAO();
+                try {
+                    int idsuite = utilisateur.getId_enigme() + 1;
+                    listeEnigme = enigmeDAO.readSpec(String.valueOf(utilisateur.getId_parcours()),
+                            String.valueOf(idsuite));
+                } catch (Exception e) {
+                    return false;
+                }
+            }
+
             // On récupère la première énigme, et ça sera l'énigme en cours
             currentEnigme = listeEnigme.get(0);
 
-            // Récupération de l'image via le site
+            // Récupération de l'image normale via le site
             try {
                 String lien = "http://www.enigwall.esy.es/app/"+id_ville+"/"+currentEnigme.getNomimage();
                 url = new URL(lien);
@@ -313,6 +323,18 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 URLConnection connection = url.openConnection();
                 InputStream inputStream = connection.getInputStream();
                 bitmap = BitmapFactory.decodeStream(inputStream);
+            }
+            catch (MalformedURLException e) {}
+            catch (IOException e) {}
+
+            // Récupération de l'image floutée via le site
+            try {
+                String lien = "http://www.enigwall.esy.es/app/"+id_ville+"/blur/"+currentEnigme.getNomimage();
+                url = new URL(lien);
+
+                URLConnection connection = url.openConnection();
+                InputStream inputStream = connection.getInputStream();
+                blur = BitmapFactory.decodeStream(inputStream);
             }
             catch (MalformedURLException e) {}
             catch (IOException e) {}
@@ -349,8 +371,8 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 nextEnigme.setText(getResources().getText(R.string.voting));
             }
 
-            // On affiche l'image
-            enigmePicture.setImageBitmap(bitmap);
+            // On affiche l'image floutée
+            enigmePicture.setImageBitmap(blur);
 
             pd.dismiss();
         }
@@ -359,6 +381,81 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         protected void onCancelled() {
             Toast toast = Toast.makeText(GameActivity.this,getResources().getString(R.string.toastCancel),Toast.LENGTH_SHORT);
             toast.show();
+        }
+    }
+
+    // Classe asynchrone pour la sauvegarde de l'avancement de l'utilisateur
+    private class SaveUser extends AsyncTask<String, Integer, Boolean> {
+        private UtilisateurDAO utilisateurDAO;
+
+        public SaveUser(GameActivity pActivity){
+            link(pActivity);
+        }
+
+        private void link(GameActivity pActivity){
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            utilisateurDAO = new UtilisateurDAO();
+
+            try {
+                if(listeEnigme.size() == 0) {
+                    utilisateurDAO.updateAvancement(utilisateur);
+                } else {
+                    utilisateur.setId_enigme(currentEnigme.getId_enigme());
+                    utilisateur.setId_parcours(currentEnigme.getId_parcours());
+                    utilisateurDAO.update(utilisateur);
+                }
+            } catch (Exception e) {
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+
+            if(aBoolean) {
+                if(listeEnigme.size() == 0) {
+                    // On passe au vote puisqu'il n'y a plus d'énigmes
+                    Intent intent = new Intent(GameActivity.this, RateActivity.class);
+                    startActivity(intent);
+                } else {
+                    // On recharge l'activité en cours avec les nouvelles valeurs
+                    Intent intent = new Intent(GameActivity.this, GameActivity.class);
+                    intent.putExtra(IDUSER, utilisateur);
+                    intent.putExtra(IDVILLE, id_ville);
+                    intent.putExtra(IDSTATE, "suivante");
+                    intent.putParcelableArrayListExtra(LISTE, listeEnigme);
+                    startActivity(intent);
+                }
+            }
+        }
+    }
+
+    // Classe interne pour détection de l'internet
+    private class NetworkReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+            // Si aucune connexion n'est trouvée, on affiche un toast
+            if (networkInfo == null || !networkInfo.isAvailable() || !networkInfo.isConnected()) {
+                Toast toast = Toast.makeText(GameActivity.this, getResources().getText(R.string.connexionError), Toast.LENGTH_SHORT);
+                toast.show();
+                // On désactive les boutons
+                nextEnigme.setEnabled(false);
+            }
         }
     }
 }

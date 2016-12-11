@@ -32,6 +32,16 @@ public class EnigmeTestApex {
             System.out.println(e.getMessage());
         }
 
+        // Lecture multiple
+        System.out.println("-- LECTURE MULTIPLE SPEC --");
+        try {
+            ArrayList<Enigme> liste = enigmeDAO.readSpec("1", "2");
+            System.out.println(liste);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
         // Création d'une nouvelle énigme si on reçoit son ID c'est ok si on reçoit 0 c'est que l'énigme existe déjà
         Enigme enigme = new Enigme(1, "Test test", "0.0", "0.0", "Blabla", "blabla", "blabla", "bloblo", "test.jpg");
 

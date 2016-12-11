@@ -180,6 +180,31 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
     }
 
     /**
+     * Méthode permettant de remettre à 0 l'avancement de l'utilisateur
+     * @param l'utilisateur à mettre à jour
+     * @throws si l'utilisateur n'existe pas, une exception est levée
+     */
+    public void updateAvancement(Utilisateur obj) throws Exception {
+        Utilisateur utilisateur = obj;
+        String json = "";
+
+        try{
+            json = gson.toJson(utilisateur);
+        }
+        catch(Exception e){
+            throw new Exception("Erreur de conversion JSON");
+        }
+
+        ClientResponse response = service.path("updateAvancementUser/").type("application/json").put(ClientResponse.class, json);
+        int status = response.getStatus();
+        MultivaluedMap h = response.getHeaders();
+
+        if(status >=400){
+            throw new Exception("L'utilisateur n'existe pas !");
+        }
+    }
+
+    /**
      * Méthode permettant d'encrypter le mot de passe en SHA1
      * @param le mot de passe à encrypter
      * @return le mot de passe encrypté

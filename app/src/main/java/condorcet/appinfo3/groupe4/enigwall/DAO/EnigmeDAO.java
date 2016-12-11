@@ -117,4 +117,18 @@ public class EnigmeDAO extends DAO<Enigme> {
         if (listeEnigme.getItems().size() == 0) throw new Exception("ID inconnu !");
         return listeEnigme.getItems();
     }
+
+    /**
+     * Méthode permettant de récupérer une liste de toutes les énigmes suivant un parcours donné et les énigmes suivantes à celle-ci
+     * @param l'id du parcours, l'id de l'énigme suivante
+     * @return la liste des énigmes
+     */
+    public ArrayList<Enigme> readSpec(String id, String idsuite) throws Exception {
+        ArrayList<Enigme> enigmes = new ArrayList<>();
+
+        String liste = service.path("readSpecEnigme/" + id +"-"+ idsuite).get(String.class);
+        ListeEnigme listeEnigme = gson.fromJson(liste, ListeEnigme.class);
+        if (listeEnigme.getItems().size() == 0) throw new Exception("ID inconnu !");
+        return listeEnigme.getItems();
+    }
 }

@@ -35,8 +35,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import condorcet.appinfo3.groupe4.enigwall.DAO.ParcoursDAO;
 import condorcet.appinfo3.groupe4.enigwall.DAO.UtilisateurDAO;
 import condorcet.appinfo3.groupe4.enigwall.DAO.VilleDAO;
+import condorcet.appinfo3.groupe4.enigwall.Metier.Parcours;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Utilisateur;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Ville;
 
@@ -196,6 +198,15 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
                     villeLoc = ville;
                 }
             }
+
+            // Si l'utilisateur a déjà une partie en cours, on teste si la ville de l'énigme est la ville localisée,
+            // si oui on active le bouton reprendre
+            String test = String.valueOf(utilisateur.getId_enigme());
+            if(!test.equals("0")) {
+                GetParcours getParcours = new GetParcours(this);
+                getParcours.execute(String.valueOf(villeLoc.getId_ville()));
+            }
+
         }
     }
 
@@ -223,6 +234,7 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
         mGoogleApiClient.connect();
         super.onStart();
         listeVilles = new ArrayList<Ville>();
+        // On lance la tâche pour récupérer les villes
         GetAllVille allVille = new GetAllVille(HubActivity.this);
         allVille.execute();
     }
@@ -262,19 +274,19 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
     }
 
     public void continuer(View v){
-        /*Intent i = new Intent(HubActivity.this,GameActivity.class);
-        i.putExtra(IDUSER,utilisateur);
-        startActivity(i);*/
+        Intent i = new Intent(HubActivity.this, GameActivity.class);
+        i.putExtra(IDUSER, utilisateur);
+        i.putExtra(IDSTATE, "reprendre");
+        startActivity(i);
     }
 
-    public void commencer(View v){
-        Intent i = new Intent(HubActivity.this,GameActivity.class);
+    public void commencer(View v) {
+        Intent i = new Intent(HubActivity.this, GameActivity.class);
         i.putExtra(IDUSER, utilisateur);
         i.putExtra(IDVILLE, villeLoc);
         i.putExtra(IDSTATE, "commencer");
         startActivity(i);
     }
-    ///////////////////
 
     ////CLASSE INTERNE ASYNCHRONE
     class DeleteUser extends AsyncTask<String, Integer, Boolean> {
@@ -340,7 +352,7 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
     }
 
     // Classe asynchrone pour chercher la liste des villes dispos
-    class GetAllVille extends AsyncTask<String, Integer, Boolean> {
+    private class GetAllVille extends AsyncTask<String, Integer, Boolean> {
         private VilleDAO villeDAO;
 
         public GetAllVille(HubActivity pActivity) {
@@ -378,6 +390,51 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
     }
     // Fin classe asynchrone villes
 
+    // Classe aynchrone pour récupérer la parcours en fonction de la ville
+    private class GetParcours extends AsyncTask<String, Integer, Boolean> {
+        private ParcoursDAO parcoursDAO;
+        private Parcours parcours;
+
+        public GetParcours(HubActivity pActivity) {
+            link(pActivity);
+        }
+
+        private void link(HubActivity pActivity) {
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            String id = strings[0];
+            parcoursDAO = new ParcoursDAO();
+
+            try {
+                parcours = parcoursDAO.read(id);
+            } catch (Exception e) {
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+
+            if(aBoolean) {
+                reprendre.setEnabled(true);
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+        }
+    }
+    // Fin classe asynchrone parcours
+
     // Classe interne pour détection de l'internet
     private class NetworkReceiver extends BroadcastReceiver {
 
@@ -396,5 +453,4 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
             }
         }
     }
-    // Fin classe
 }

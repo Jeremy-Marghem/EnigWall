@@ -13,9 +13,10 @@ public class ClientTestApex {
 
         // Lecture simple
         System.out.println("-- LECTURE --");
+        Utilisateur user = null;
         try {
-            Utilisateur utilisateur = utilisateurDAO.read("1");
-            System.out.println("Utilisateur lu : " +utilisateur);
+            user = utilisateurDAO.read("1");
+            System.out.println("Utilisateur lu : " +user);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -77,6 +78,25 @@ public class ClientTestApex {
         try {
             utilisateurDAO.update(utilisateur);
             System.out.println("Utilisateur mis à jour !");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        user.setId_parcours(1);
+        user.setId_enigme(2);
+        System.out.println("-- UPDATE --");
+        try {
+            utilisateurDAO.update(user);
+            System.out.println("Utilisateur mis à jour !");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        // Update avancement
+        System.out.println("-- UPDATE AVANCEMENT --");
+        try {
+            utilisateurDAO.updateAvancement(user);
+            System.out.println("Avancement utilisateur mis à jour !");
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
