@@ -16,11 +16,11 @@ public class MainActivity extends Activity {
     Button signup, signin;
     private NetworkReceiver receiver;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         signup = (Button)findViewById(R.id.signupButton);
         signin = (Button)findViewById(R.id.signinButton);
 
@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
         receiver = new NetworkReceiver();
         this.registerReceiver(receiver, filter);
     }
+
 
     public void signup(View v){
         Intent i = new Intent(MainActivity.this, SignupActivity.class);

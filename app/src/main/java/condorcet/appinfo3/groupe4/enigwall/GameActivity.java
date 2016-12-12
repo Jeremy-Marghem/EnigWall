@@ -16,7 +16,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.os.Vibrator;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -156,38 +155,40 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
 
         if (mLastLocation != null) {
             double distance = mLastLocation.distanceTo(objectifLocation);
+
             // Gestion des distances pour affichage d'un message différent
             // Si on est entre 0 et 25 M, le changement d'énigme est possible
             if(distance > 1000 && distance <= 4000) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi1)+" - "+Math.round(distance)+ "M");
-                if(etape!=1){
+                if(etape != 1){
                     vibreur.vibrate(1000);
                     etape = 1;
                 }
             } else if(distance <= 1000 && distance > 400) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi2)+" - "+Math.round(distance)+ "M");
-                if(etape!=2){
+                if(etape != 2){
                     vibreur.vibrate(1000);
                     etape = 2;
                 }
             } else if(distance <= 400 && distance > 100) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi3)+" - "+Math.round(distance)+ "M");
-                if(etape!=3){
+                if(etape != 3){
                     vibreur.vibrate(1000);
                     etape = 3;
                 }
             } else if(distance <= 100 && distance > 25) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi4)+" - "+Math.round(distance)+ "M");
-                if(etape!=4){
+                if(etape != 4){
                     vibreur.vibrate(1000);
                     etape = 4;
                 }
             } else if(distance <= 25 && distance >= 0) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi5)+" - "+Math.round(distance)+ "M");
-                if(etape!=5){
-                    vibreur.vibrate(1000);
+                if(etape != 5){
+                    vibreur.vibrate(3000);
                     etape = 5;
-                }                // On remet une image du monument non floutée
+                }
+                // On remet une image du monument non floutée
                 enigmePicture.setImageBitmap(bitmap);
                 // On affiche le bouton pour passer à l'énigme suivante
                 nextEnigme.setVisibility(View.VISIBLE);
