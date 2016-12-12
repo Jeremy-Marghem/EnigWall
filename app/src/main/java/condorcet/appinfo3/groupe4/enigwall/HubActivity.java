@@ -188,25 +188,27 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
 
             // On met la ville récupérée grâce au GPS dans la textview
             localisation.setText(getResources().getText(R.string.msgLocalisation)+" : "+cityName);
-
             // On teste la localisation trouvée avec la liste des villes
+            // On créé un boolean pour dire si oui ou non on a trouvé la ville dans la liste
+            boolean findCity = false;
             for(Ville ville : listeVilles) {
                 if(ville.getNomville().equals(cityName)) {
                     // Comme on a trouvé une ville, on réactive le bouton
                     commencer.setEnabled(true);
                     // On met la ville localisée pour un futur envoie à l'activité GameActivity
                     villeLoc = ville;
+                    findCity = true;
                 }
             }
 
-            // Si l'utilisateur a déjà une partie en cours, on teste si la ville de l'énigme est la ville localisée,
-            // si oui on active le bouton reprendre
+            // Si l'utilisateur a déjà une partie en cours et que l'on a trouvé sa ville dans la liste,
+            // on teste si la ville de l'énigme est la ville localisée,
+            // si oui on active le bouton reprendre dans l'asynctask
             String test = String.valueOf(utilisateur.getId_enigme());
-            if(!test.equals("0")) {
+            if(!test.equals("0") && findCity) {
                 GetParcours getParcours = new GetParcours(this);
                 getParcours.execute(String.valueOf(villeLoc.getId_ville()));
             }
-
         }
     }
 
@@ -426,7 +428,9 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
             super.onPostExecute(aBoolean);
 
             if(aBoolean) {
-                reprendre.setEnabled(true);
+                if(utilisateur.getId_parcours() == parcours.getId_parcours()) {
+                    reprendre.setEnabled(true);
+                }
             }
         }
 
