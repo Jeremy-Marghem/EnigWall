@@ -36,15 +36,14 @@
     <string name="hub_del_error">Fehler könnten wir Ihr Konto nicht löschen</string>
     <string name="menu_del_cpt">Konto löschen</string>
     <string name="menu_signoff">Ausloggen</string>
-    <string name="msgLocalisation">Ville</string>
-    <string name="msgLocalisationRecherche">En recherche...</string>
-    <string name="loadgame">Chargement de l\'énigme...</string>
-    <string name="msgIndicationProxi1">Vous êtes très loin de l\'objectif !</string>
-    <string name="msgIndicationProxi2">Vous êtes loin de l\'objectif !</string>
-    <string name="msgIndicationProxi3">Vous êtes proche de l\'objectif !</string>
-    <string name="msgIndicationProxi4">Vous êtes très proche de l \'objectif !</string>
-    <string name="msgIndicationProxi5">Bravo, vous avez réussi !</string>
-    <string name="nextEnigme">Enigme suivante</string>
-    <string name="voting">Passez au vote</string>
-
+    <string name="msgLocalisation">Stadt</string>
+    <string name="msgLocalisationRecherche">Die Berechnung des aktuellen Standorts...</string>
+    <string name="loadgame">" Das Rätsel wird geladen ..."</string>
+    <string name="msgIndicationProxi1">Sie sind sehr weit vom Ziel entfernt!</string>
+    <string name="msgIndicationProxi2">Sie sind weit von dem Ziel!</string>
+    <string name="msgIndicationProxi3">Sie sind nah am Ziel!</string>
+    <string name="msgIndicationProxi4">Sie sind ganz nah am Ziel!</string>
+    <string name="msgIndicationProxi5">Herzlichen Glückwunsch, Sie haben es geschafft!</string>
+    <string name="nextEnigme">Nächste Enigma</string>
+    <string name="voting">Zur Abstimmung</string>
 </resources>

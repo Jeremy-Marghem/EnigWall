@@ -36,15 +36,15 @@
     <string name="hub_del_error">Error, we could not delete your account</string>
     <string name="menu_del_cpt">Delete account</string>
     <string name="menu_signoff">Sign out</string>
-    <string name="msgLocalisation">Ville</string>
-    <string name="msgLocalisationRecherche">En recherche...</string>
-    <string name="loadgame">Chargement de l\'énigme...</string>
-    <string name="msgIndicationProxi1">Vous êtes très loin de l\'objectif !</string>
-    <string name="msgIndicationProxi2">Vous êtes loin de l\'objectif !</string>
-    <string name="msgIndicationProxi3">Vous êtes proche de l\'objectif !</string>
-    <string name="msgIndicationProxi4">Vous êtes très proche de l \'objectif !</string>
-    <string name="msgIndicationProxi5">Bravo, vous avez réussi !</string>
-    <string name="nextEnigme">Enigme suivante</string>
-    <string name="voting">Passez au vote</string>
+    <string name="msgLocalisation">Town</string>
+    <string name="msgLocalisationRecherche">Calculating current location...</string>
+    <string name="loadgame">Loading enigma...</string>
+    <string name="msgIndicationProxi1">You are very far from the goal!</string>
+    <string name="msgIndicationProxi2">You are far from the goal !</string>
+    <string name="msgIndicationProxi3">You are close to the goal !</string>
+    <string name="msgIndicationProxi4">You are very close to the goal!</string>
+    <string name="msgIndicationProxi5">Congratulations, you have succeeded!</string>
+    <string name="nextEnigme">Next enigma</string>
+    <string name="voting">Go to vote</string>
 
 </resources>
