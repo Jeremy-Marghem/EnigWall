@@ -3,6 +3,7 @@ package condorcet.appinfo3.groupe4.enigwall.Metier;
 public class Voter {
     int id_vote, id_parcours, nbrvote;
 
+    public Voter(){}
     public Voter(int id_vote, int id_parcours, int nbrvote) {
         this.id_vote = id_vote;
         this.id_parcours = id_parcours;

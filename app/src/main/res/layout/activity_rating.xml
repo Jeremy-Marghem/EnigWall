@@ -43,6 +43,7 @@
             android:text="VOTER"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/RatingValidButton" />
+            android:id="@+id/RatingValidButton"
+            android:onClick="voter" />
     </TableRow>
 </TableLayout>

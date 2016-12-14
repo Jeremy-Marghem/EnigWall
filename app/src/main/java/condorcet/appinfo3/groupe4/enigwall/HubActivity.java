@@ -284,10 +284,10 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
     }
 
     public void commencer(View v) {
-        Intent i = new Intent(HubActivity.this, GameActivity.class);
-        i.putExtra(IDUSER, utilisateur);
+        Intent i = new Intent(HubActivity.this, RateActivity.class/*GameActivity.class*/);
+        /*i.putExtra(IDUSER, utilisateur);
         i.putExtra(IDVILLE, villeLoc);
-        i.putExtra(IDSTATE, "commencer");
+        i.putExtra(IDSTATE, "commencer");*/
         startActivity(i);
     }
 

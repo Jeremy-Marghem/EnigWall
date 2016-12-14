@@ -49,6 +49,7 @@ import condorcet.appinfo3.groupe4.enigwall.Metier.Enigme;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Parcours;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Utilisateur;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Ville;
+import condorcet.appinfo3.groupe4.enigwall.Metier.Voter;
 
 public class GameActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
@@ -80,6 +81,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     public final static String IDSTATE = "state";
     public final static String IDENIGME = "enigme";
     public final static String LISTE = "liste";
+    public final static String IDPARCOURS = "parcours";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -375,7 +377,6 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
             // Réactivation de l'orientation
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
-            //------------> INSERER ICI UN SWITCH POUR CHOISIR LE TEXTE EN FONCTION DE LA LANGUE DU GSM
             switch (Locale.getDefault().getLanguage()) {
                 case "fr":
                     enigmeTv.setText(currentEnigme.getTexteenigmefr());
@@ -453,6 +454,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 if(listeEnigme.size() == 0) {
                     // On passe au vote puisqu'il n'y a plus d'énigmes
                     Intent intent = new Intent(GameActivity.this, RateActivity.class);
+                    i.putExtra(IDPARCOURS, parcours.getId_parcours());
                     startActivity(intent);
                 } else {
                     // On recharge l'activité en cours avec les nouvelles valeurs
