@@ -45,6 +45,10 @@
     <string name="msgIndicationProxi5">Bravo, vous avez réussi !</string>
     <string name="nextEnigme">Enigme suivante</string>
     <string name="voting">Passez au vote</string>
+    <string name="confirmation">Une énigme est déjà en cours ! Voulez-vous quand même commencer une nouvelle partie ?</string>
+    <string name="begin">Commencer</string>
+    <string name="enigmeOK">Des énigmes sont disponibles !</string>
+    <string name="enigmeNOK">Aucune énigme disponible !</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

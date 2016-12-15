@@ -49,7 +49,6 @@ import condorcet.appinfo3.groupe4.enigwall.Metier.Enigme;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Parcours;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Utilisateur;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Ville;
-import condorcet.appinfo3.groupe4.enigwall.Metier.Voter;
 
 public class GameActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
@@ -79,7 +78,6 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     public final static String IDUSER = "user";
     public final static String IDVILLE = "ville";
     public final static String IDSTATE = "state";
-    public final static String IDENIGME = "enigme";
     public final static String LISTE = "liste";
     public final static String IDPARCOURS = "parcours";
 
@@ -111,7 +109,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
             id_enigme = utilisateur.getId_enigme();
         }
 
-        if(state.equals("suivante")) {
+        if(state.equals("suivant")) {
             utilisateur = (Utilisateur) i.getParcelableExtra(GameActivity.IDUSER);
             id_ville = i.getIntExtra(GameActivity.IDVILLE, -1);
             listeEnigme = i.getParcelableArrayListExtra(GameActivity.LISTE);
@@ -156,7 +154,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         }
 
         if (mLastLocation != null) {
-            double distance = mLastLocation.distanceTo(objectifLocation);
+            double distance = 15;//mLastLocation.distanceTo(objectifLocation);
 
             // Gestion des distances pour affichage d'un message différent
             // Si on est entre 0 et 25 M, le changement d'énigme est possible
@@ -187,7 +185,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
             } else if(distance <= 25 && distance >= 0) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi5)+" - "+Math.round(distance)+ "M");
                 if(etape != 5){
-                    vibreur.vibrate(3000);
+                    vibreur.vibrate(2000);
                     etape = 5;
                 }
                 // On remet une image du monument non floutée
@@ -309,7 +307,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            // Récupération du parcours en fonction de l'i de la ville
+            // Récupération du parcours en fonction de l'id de la ville
             // On charge les DAO seulement si l' on a commencé une nouvelle partie
             if(state.equals("commencer")) {
                 parcoursDAO = new ParcoursDAO();
@@ -326,21 +324,37 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 } catch (Exception e) {
                     return false;
                 }
+
+                // On réinit l'avancement de l'utilisateur
+                UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+                try {
+                    utilisateurDAO.updateAvancement(utilisateur);
+                } catch (Exception e) {
+                    return false;
+                }
             }
 
             if(state.equals("reprendre")) {
                 // Récupération de la liste d'énigmes suivant le parcours et l'id de l'énigme suivante
                 enigmeDAO = new EnigmeDAO();
                 try {
-                    int idsuite = utilisateur.getId_enigme() + 1;
-                    listeEnigme = enigmeDAO.readSpec(String.valueOf(utilisateur.getId_parcours()),
-                            String.valueOf(idsuite));
+                    // On récupére l'id de l'énigme suivante
+                    Enigme enigme = enigmeDAO.read(String.valueOf(utilisateur.getId_enigme()));
+
+                    if(enigme.getId_enigme_suite() == 0) {
+                        // S'il n'y a pas d'énigme suivante, on sait que l'on est à la dernière énigme
+                        listeEnigme.add(enigme);
+                    } else {
+                        // S'il y une énigme suivante, on la recherche
+                        listeEnigme = enigmeDAO.readSpec(String.valueOf(utilisateur.getId_parcours()),
+                        String.valueOf(enigme.getId_enigme_suite()));
+                    }
                 } catch (Exception e) {
                     return false;
                 }
             }
 
-            // On récupère la première énigme, et ça sera l'énigme en cours
+            // On récupère l'énigme, et ça sera l'énigme en cours
             currentEnigme = listeEnigme.get(0);
 
             // Récupération de l'image normale via le site
@@ -454,14 +468,15 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 if(listeEnigme.size() == 0) {
                     // On passe au vote puisqu'il n'y a plus d'énigmes
                     Intent intent = new Intent(GameActivity.this, RateActivity.class);
-                    i.putExtra(IDPARCOURS, parcours.getId_parcours());
+                    intent.putExtra(IDUSER, utilisateur);
+                    intent.putExtra(IDPARCOURS, currentEnigme.getId_parcours());
                     startActivity(intent);
                 } else {
                     // On recharge l'activité en cours avec les nouvelles valeurs
                     Intent intent = new Intent(GameActivity.this, GameActivity.class);
                     intent.putExtra(IDUSER, utilisateur);
                     intent.putExtra(IDVILLE, id_ville);
-                    intent.putExtra(IDSTATE, "suivante");
+                    intent.putExtra(IDSTATE, "suivant");
                     intent.putParcelableArrayListExtra(LISTE, listeEnigme);
                     startActivity(intent);
                 }

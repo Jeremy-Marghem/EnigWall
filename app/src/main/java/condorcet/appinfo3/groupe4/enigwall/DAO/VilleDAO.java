@@ -70,7 +70,6 @@ public class VilleDAO extends DAO<Ville>{
 
         ClientResponse response = service.path("updateVille/").type("application/json").put(ClientResponse.class, json);
         int status = response.getStatus();
-        MultivaluedMap h = response.getHeaders();
 
         if(status >=400){
             throw new Exception("La ville n'existe pas !");
@@ -96,7 +95,6 @@ public class VilleDAO extends DAO<Ville>{
 
         ClientResponse response = service.path("deleteVille/").type("application/json").delete(ClientResponse.class, json);
         int status = response.getStatus();
-        MultivaluedMap h = response.getHeaders();
 
         if(status >=400){
             throw new Exception("La ville n'existe pas !");

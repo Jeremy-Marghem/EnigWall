@@ -7,23 +7,21 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.Toast;
-
-import condorcet.appinfo3.groupe4.enigwall.DAO.UtilisateurDAO;
 import condorcet.appinfo3.groupe4.enigwall.DAO.VoterDAO;
+import condorcet.appinfo3.groupe4.enigwall.Metier.Utilisateur;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Voter;
-
 import static java.lang.Math.round;
 
 public class RateActivity extends Activity{
-
-    public final static String IDPARCOURS = "parcours";
-
     RatingBar ratingBar;
     int id_parcours;
     Voter voter;
+    Utilisateur utilisateur;
+
+    public final static String IDUSER = "user";
+    //public final static String IDPARCOURS = "parcours";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +31,7 @@ public class RateActivity extends Activity{
         ratingBar = (RatingBar)findViewById(R.id.ratingBar);
 
         Intent i = getIntent();
+        utilisateur = (Utilisateur) i.getParcelableExtra(GameActivity.IDUSER);
         id_parcours = i.getIntExtra(GameActivity.IDPARCOURS, -1);
     }
 
@@ -94,6 +93,7 @@ public class RateActivity extends Activity{
 
             if(aBoolean){
                 Intent i = new Intent(RateActivity.this, HubActivity.class);
+                i.putExtra(IDUSER, utilisateur);
                 startActivity(i); //ON REVIENT A L'ACTIVITE HUB
                 finish(); //ON DETRUIT L'ACTIVITE RATE
             } else {

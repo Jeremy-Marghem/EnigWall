@@ -46,7 +46,7 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
     Button commencer, reprendre;
     Utilisateur utilisateur;
-    TextView welcome, localisation;
+    TextView welcome, localisation, information;
     private NetworkReceiver receiver;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
@@ -69,6 +69,7 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
         welcome = (TextView) findViewById(R.id.welcomeTv);
         welcome.setText(getResources().getString(R.string.hub_connectMsg)+ " " + utilisateur.getPseudo().substring(0,1).toUpperCase() + utilisateur.getPseudo().substring(1) + " !");
         localisation = (TextView) findViewById(R.id.localisationTv);
+        information = (TextView) findViewById(R.id.informationTv);
         commencer = (Button)findViewById(R.id.beginButton);
         reprendre = (Button)findViewById(R.id.continueButton);
 
@@ -188,6 +189,7 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
 
             // On met la ville récupérée grâce au GPS dans la textview
             localisation.setText(getResources().getText(R.string.msgLocalisation)+" : "+cityName);
+
             // On teste la localisation trouvée avec la liste des villes
             // On créé un boolean pour dire si oui ou non on a trouvé la ville dans la liste
             boolean findCity = false;
@@ -198,7 +200,12 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
                     // On met la ville localisée pour un futur envoie à l'activité GameActivity
                     villeLoc = ville;
                     findCity = true;
+                    information.setText(getResources().getText(R.string.enigmeOK));
                 }
+            }
+
+            if(!findCity) {
+                information.setText(getResources().getText(R.string.enigmeNOK));
             }
 
             // Si l'utilisateur a déjà une partie en cours et que l'on a trouvé sa ville dans la liste,
@@ -207,7 +214,7 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
             String test = String.valueOf(utilisateur.getId_enigme());
             if(!test.equals("0") && findCity) {
                 GetParcours getParcours = new GetParcours(this);
-                getParcours.execute(String.valueOf(villeLoc.getId_ville()));
+                getParcours.execute(String.valueOf(villeLoc.getId_ville()));;
             }
         }
     }
@@ -281,14 +288,52 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
         i.putExtra(IDVILLE, villeLoc);
         i.putExtra(IDSTATE, "reprendre");
         startActivity(i);
+        finish();
     }
 
     public void commencer(View v) {
-        Intent i = new Intent(HubActivity.this, RateActivity.class/*GameActivity.class*/);
-        /*i.putExtra(IDUSER, utilisateur);
-        i.putExtra(IDVILLE, villeLoc);
-        i.putExtra(IDSTATE, "commencer");*/
-        startActivity(i);
+        if(utilisateur.getId_enigme() == 0) {
+            // L'utilisateur n'a aucune énigme en cours, on passe à l'activité suivante
+            Intent i = new Intent(HubActivity.this, GameActivity.class);
+            i.putExtra(IDUSER, utilisateur);
+            i.putExtra(IDVILLE, villeLoc);
+            i.putExtra(IDSTATE, "commencer");
+            startActivity(i);
+            finish();
+        } else {
+            // L'utilisateur a une énigme en cours, on affiche une boîte de dialogue pour le prévenir
+            alertDial();
+        }
+
+    }
+
+    private void alertDial() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(HubActivity.this);
+
+        TextView mytitle = new TextView(this);
+        mytitle.setText(getResources().getText(R.string.confirmation));
+        mytitle.setTextSize(20);
+        mytitle.setPadding(35, 15, 15, 15);
+        mytitle.setTypeface(Typeface.DEFAULT_BOLD);
+
+        builder.setNegativeButton(getResources().getText(R.string.hub_but_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        })
+                .setPositiveButton(getResources().getText(R.string.begin), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent in = new Intent(HubActivity.this, GameActivity.class);
+                        in.putExtra(IDUSER, utilisateur);
+                        in.putExtra(IDVILLE, villeLoc);
+                        in.putExtra(IDSTATE, "commencer");
+                        startActivity(in);
+                        finish();
+                    }
+                });
+        builder.setCustomTitle(mytitle);
+        builder.show();
     }
 
     ////CLASSE INTERNE ASYNCHRONE

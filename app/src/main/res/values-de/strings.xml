@@ -46,4 +46,9 @@
     <string name="msgIndicationProxi5">Herzlichen Glückwunsch, Sie haben es geschafft!</string>
     <string name="nextEnigme">Nächste Enigma</string>
     <string name="voting">Zur Abstimmung</string>
+    <string name="confirmation">Une énigme est déjà en cours ! Voulez-vous quand même commencer une nouvelle partie ?</string>
+    <string name="begin">Commencer</string>
+    <string name="enigmeOK">Des énigmes sont disponibles !</string>
+    <string name="enigmeNOK">Aucune énigme disponible !</string>
+
 </resources>

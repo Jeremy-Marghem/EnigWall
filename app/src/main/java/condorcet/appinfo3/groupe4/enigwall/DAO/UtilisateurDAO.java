@@ -70,7 +70,6 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 
         ClientResponse response = service.path("updateUser/").type("application/json").put(ClientResponse.class, json);
         int status = response.getStatus();
-        MultivaluedMap h = response.getHeaders();
 
         if(status >=400){
             throw new Exception("L'utilisateur n'existe pas !");
@@ -96,7 +95,6 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 
         ClientResponse response = service.path("deleteUser/").type("application/json").delete(ClientResponse.class, json);
         int status = response.getStatus();
-        MultivaluedMap h = response.getHeaders();
 
         if(status >=400){
             throw new Exception("L'utilisateur n'existe pas !");
@@ -121,7 +119,6 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 
         ClientResponse response = service.path("checkPseudo/").type("application/json").post(ClientResponse.class, json);
         int status = response.getStatus();
-        MultivaluedMap h = response.getHeaders();
 
         if(status == 500){
             return false;
@@ -149,7 +146,6 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 
         ClientResponse response = service.path("checkMail/").type("application/json").post(ClientResponse.class, json);
         int status = response.getStatus();
-        MultivaluedMap h = response.getHeaders();
 
         if(status == 500){
             return false;
@@ -197,7 +193,6 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 
         ClientResponse response = service.path("updateAvancementUser/").type("application/json").put(ClientResponse.class, json);
         int status = response.getStatus();
-        MultivaluedMap h = response.getHeaders();
 
         if(status >=400){
             throw new Exception("L'utilisateur n'existe pas !");

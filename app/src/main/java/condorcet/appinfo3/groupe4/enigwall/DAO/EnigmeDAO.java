@@ -16,7 +16,6 @@ public class EnigmeDAO extends DAO<Enigme> {
     @Override
     public Enigme read(String id) throws Exception {
         String eni = service.path("infoEnigme/"+id).get(String.class);
-        System.out.println(eni);
         Enigme enigme = gson.fromJson(eni, Enigme.class);
 
         return enigme;
@@ -71,7 +70,6 @@ public class EnigmeDAO extends DAO<Enigme> {
 
         ClientResponse response = service.path("updateEnigme/").type("application/json").put(ClientResponse.class, json);
         int status = response.getStatus();
-        MultivaluedMap h = response.getHeaders();
 
         if(status >=400){
             throw new Exception("L'énigme n'existe pas !");
@@ -97,7 +95,6 @@ public class EnigmeDAO extends DAO<Enigme> {
 
         ClientResponse response = service.path("deleteEnigme/").type("application/json").delete(ClientResponse.class, json);
         int status = response.getStatus();
-        MultivaluedMap h = response.getHeaders();
 
         if(status >=400){
             throw new Exception("L'énigme n'existe pas !");

@@ -46,5 +46,9 @@
     <string name="msgIndicationProxi5">Congratulations, you have succeeded!</string>
     <string name="nextEnigme">Next enigma</string>
     <string name="voting">Go to vote</string>
+    <string name="confirmation">Une énigme est déjà en cours ! Voulez-vous quand même commencer une nouvelle partie ?</string>
+    <string name="begin">Commencer</string>
+    <string name="enigmeOK">Des énigmes sont disponibles !</string>
+    <string name="enigmeNOK">Aucune énigme disponible !</string>
 
 </resources>

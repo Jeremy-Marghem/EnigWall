@@ -23,6 +23,7 @@ public class LoginActivity extends Activity {
     Utilisateur utilisateurConnect;
     EditText pseudoEd, passwordEd;
     private NetworkReceiver receiver;
+
     public final static String IDUSER = "user";
 
     @Override

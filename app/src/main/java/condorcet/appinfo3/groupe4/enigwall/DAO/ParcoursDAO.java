@@ -67,7 +67,6 @@ public class ParcoursDAO extends DAO<Parcours> {
 
         ClientResponse response = service.path("updateParcours/").type("application/json").put(ClientResponse.class, json);
         int status = response.getStatus();
-        MultivaluedMap h = response.getHeaders();
 
         if(status >=400){
             throw new Exception("Le parcours n'existe pas !");
@@ -93,7 +92,6 @@ public class ParcoursDAO extends DAO<Parcours> {
 
         ClientResponse response = service.path("deleteParcours/").type("application/json").delete(ClientResponse.class, json);
         int status = response.getStatus();
-        MultivaluedMap h = response.getHeaders();
 
         if(status >=400){
             throw new Exception("Le parcours n'existe pas !");

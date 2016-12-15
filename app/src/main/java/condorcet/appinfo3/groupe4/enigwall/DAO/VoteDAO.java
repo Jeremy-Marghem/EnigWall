@@ -68,7 +68,6 @@ public class VoteDAO extends DAO<Vote> {
 
         ClientResponse response = service.path("updateVote/").type("application/json").put(ClientResponse.class, json);
         int status = response.getStatus();
-        MultivaluedMap h = response.getHeaders();
 
         if(status >=400){
             throw new Exception("Le vote n'existe pas !");
@@ -94,7 +93,6 @@ public class VoteDAO extends DAO<Vote> {
 
         ClientResponse response = service.path("deleteVote/").type("application/json").delete(ClientResponse.class, json);
         int status = response.getStatus();
-        MultivaluedMap h = response.getHeaders();
 
         if(status >=400){
             throw new Exception("Le vote n'existe pas !");

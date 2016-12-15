@@ -41,27 +41,41 @@
         android:layout_weight="0.09"
         android:weightSum="1">
 
-        <TextView
-            android:layout_width="109dp"
-            android:layout_height="159dp"
-            android:id="@+id/welcomeTv"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:textColor="@android:color/black"
-            android:layout_marginLeft="25dp"
-            android:layout_weight="0.35" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="220dp"
+            android:layout_height="200dp">
 
-        <TextView
-            android:layout_width="109dp"
-            android:layout_height="159dp"
-            android:id="@+id/localisationTv"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:layout_weight="0.35"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
-            android:textColor="@android:color/black" />
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:id="@+id/welcomeTv"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:layout_marginLeft="25dp"
+                android:layout_weight="0.35" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:id="@+id/localisationTv"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:layout_weight="0.35"
+                android:layout_marginLeft="25dp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:id="@+id/informationTv"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:layout_weight="0.35"
+                android:layout_marginLeft="25dp"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
