@@ -34,6 +34,15 @@ public class RateActivity extends Activity{
         id_parcours = i.getIntExtra(GameActivity.IDPARCOURS, -1);
     }
 
+    @Override
+    public void onBackPressed() {
+        // L'utilisateur peut appuyer sur le bouton BACK pour ne pas voter et retourner sur le HUB
+        Intent i = new Intent(RateActivity.this, HubActivity.class);
+        i.putExtra(IDUSER, utilisateur);
+        startActivity(i); //ON REVIENT A L'ACTIVITE HUB
+        finish(); //ON DETRUIT L'ACTIVITE RATE
+    }
+
     public void voter(View v){
         rate = round(ratingBar.getRating());
         voter = new Voter();

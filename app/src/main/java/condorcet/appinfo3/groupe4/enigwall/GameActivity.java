@@ -149,6 +149,15 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         this.unregisterReceiver(receiver);
     }
 
+    @Override
+    public void onBackPressed() {
+        // L'utilisateur peut appuyer sur le bouton BACK pour retourner sur le HUB
+        Intent i = new Intent(GameActivity.this, HubActivity.class);
+        i.putExtra(IDUSER, utilisateur);
+        startActivity(i);
+        finish();
+    }
+
     protected void displayLocation() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
