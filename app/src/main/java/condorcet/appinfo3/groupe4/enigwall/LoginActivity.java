@@ -41,6 +41,12 @@ public class LoginActivity extends Activity {
         this.registerReceiver(receiver, filter);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(receiver);
+    }
+
     public void login(View v){
         // Méthide trim pour retirer les espaces
         utilisateurConnect = new Utilisateur(pseudoEd.getText().toString().trim().toLowerCase(),passwordEd.getText().toString());
@@ -101,10 +107,11 @@ public class LoginActivity extends Activity {
                 startActivity(i); //ON PASSE A L'ACTIVITE HUB
                 finish(); //ON DETRUIT L'ACTIVITE LOGIN
             } else {
-                pd.dismiss(); //ARRET DU PROGRESSDIALOG
                 Toast toast = Toast.makeText(LoginActivity.this, msgError, Toast.LENGTH_SHORT);
                 toast.show();
             }
+
+            pd.dismiss(); //ARRET DU PROGRESSDIALOG
         }
 
         @Override
@@ -115,7 +122,6 @@ public class LoginActivity extends Activity {
     }
 
     private class NetworkReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);

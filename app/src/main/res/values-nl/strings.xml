@@ -50,5 +50,8 @@
     <string name="begin">Commencer</string>
     <string name="enigmeOK">Des énigmes sont disponibles !</string>
     <string name="enigmeNOK">Aucune énigme disponible !</string>
+    <string name="ratingTxt">Merci de voter pour le parcours !</string>
+    <string name="ratingBtn">Votez !</string>
+    <string name="ratingError">Erreur pour l\'enregistrement du vote !</string>
 
 </resources>

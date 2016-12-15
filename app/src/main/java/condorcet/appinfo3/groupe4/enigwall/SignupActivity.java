@@ -46,6 +46,12 @@ public class SignupActivity extends AppCompatActivity {
         this.registerReceiver(receiver, filter);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(receiver);
+    }
+
     /////RESET DES CHAMPS
     public void reset(View v){
         pseudoEd.setText("");
@@ -173,7 +179,6 @@ public class SignupActivity extends AppCompatActivity {
                     reussi = false;
                 }
             }catch(Exception e){
-                System.out.println(e.getMessage());
             }
 
             //ON VERIFIE SI LE PSEUDO EST DEJA UTILISE DANS LA DB
@@ -185,13 +190,13 @@ public class SignupActivity extends AppCompatActivity {
                     reussi = false;
                 }
             } catch (Exception e) {
-                System.out.println(e.getMessage());
             }
 
             //Si tout est ok, on créé l'utilisateur dans la base de données
             if(reussi) {
                 try {
                     int id = utilisateurDAO.create(utilisateurEntre);
+                    utilisateurEntre.setId_utilisateur(id);
                 } catch (Exception e) {
                     reussi = false;
                 }
@@ -212,7 +217,6 @@ public class SignupActivity extends AppCompatActivity {
                 startActivity(i); //ON PASSE A L'ACTIVITE HUB
                 finish(); //ON DETRUIT L'ACTIVITE SIGNUP
             } else {
-                pd.dismiss(); //ARRET DU PROGRESSDIALOG
                 Toast toast = Toast.makeText(SignupActivity.this, msgError, Toast.LENGTH_SHORT);
                 toast.show();
                 if(msgError.contains(getResources().getString(R.string.toast_mailUsed))) {
@@ -222,6 +226,8 @@ public class SignupActivity extends AppCompatActivity {
                     resetPseudo();
                 }
             }
+
+            pd.dismiss(); //ARRET DU PROGRESSDIALOG
         }
 
         @Override
@@ -232,7 +238,6 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private class NetworkReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
@@ -252,5 +257,4 @@ public class SignupActivity extends AppCompatActivity {
             }
         }
     }
-
 }

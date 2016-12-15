@@ -48,5 +48,15 @@ public class VoterTestApex {
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
+
+        // Création ou update
+        System.out.println("-- CREATION/UPDATE --");
+        Voter v = new Voter();
+        v.setId_parcours(1);
+        try {
+            voterDAO.createOrupdate(v, "0");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

@@ -30,6 +30,11 @@ public class MainActivity extends Activity {
         this.registerReceiver(receiver, filter);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(receiver);
+    }
 
     public void signup(View v){
         Intent i = new Intent(MainActivity.this, SignupActivity.class);
@@ -42,7 +47,6 @@ public class MainActivity extends Activity {
     }
 
     private class NetworkReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);

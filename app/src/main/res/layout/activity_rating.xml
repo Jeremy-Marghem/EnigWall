@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="500sp"
-    android:gravity="center">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/colorPrimary">
 
     <TableRow
         android:layout_width="match_parent"
@@ -12,10 +13,12 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:text="VOTE GROS PORC!"
+            android:text="@string/ratingTxt"
             android:layout_width="wrap_content"
             android:id="@+id/messageRatingTv"
-            android:layout_margin="20sp" />
+            android:layout_margin="25sp"
+            android:textSize="16sp"
+            android:gravity="center"/>
     </TableRow>
 
     <TableRow
@@ -40,10 +43,14 @@
         android:layout_marginTop="100sp">
 
         <Button
-            android:text="VOTER"
+            android:text="@string/ratingBtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/RatingValidButton"
-            android:onClick="voter" />
+            android:onClick="voter"
+            android:textSize="18sp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:padding="25dp"
+            android:background="@android:color/holo_green_dark"/>
     </TableRow>
 </TableLayout>

@@ -95,6 +95,12 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(receiver);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_hub, menu);
         return true;
@@ -125,6 +131,7 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
                                 delete.execute();
                                 Intent in = new Intent(HubActivity.this, MainActivity.class);
                                 startActivity(in);
+                                finish();
                             }
                         });
                 builder.setCustomTitle(mytitle);
@@ -152,6 +159,7 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
                                 utilisateur = null;
                                 Intent in = new Intent(HubActivity.this, MainActivity.class);
                                 startActivity(in);
+                                finish();
                             }
                         });
                 builder2.setCustomTitle(mytitle2);
@@ -386,10 +394,11 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
                 startActivity(i); // ON PASSE A L'ACTIVITE MAIN
                 finish(); // ON DETRUIT L'ACTIVITE HUB
             } else {
-                pd.dismiss(); // ARRET DU PROGRESSDIALOG
                 Toast toast = Toast.makeText(HubActivity.this, msgError, Toast.LENGTH_SHORT);
                 toast.show();
             }
+
+            pd.dismiss(); // ARRET DU PROGRESSDIALOG
         }
 
         @Override
@@ -487,7 +496,6 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
 
     // Classe interne pour détection de l'internet
     private class NetworkReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);

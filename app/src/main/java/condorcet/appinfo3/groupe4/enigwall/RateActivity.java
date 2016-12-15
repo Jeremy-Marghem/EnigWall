@@ -16,12 +16,11 @@ import static java.lang.Math.round;
 
 public class RateActivity extends Activity{
     RatingBar ratingBar;
-    int id_parcours;
+    int id_parcours, rate;
     Voter voter;
     Utilisateur utilisateur;
 
     public final static String IDUSER = "user";
-    //public final static String IDPARCOURS = "parcours";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +35,10 @@ public class RateActivity extends Activity{
     }
 
     public void voter(View v){
-        int rate = round(ratingBar.getRating());
+        rate = round(ratingBar.getRating());
         voter = new Voter();
         voter.setId_parcours(id_parcours);
-        voter.setId_vote(rate);
-        voter.setNbrvote(1);
-        EnvoiVote envoiVote = new EnvoiVote(RateActivity.this);
+        EnvoiVote envoiVote = new EnvoiVote(this);
         envoiVote.execute();
     }
     ///////////////////
@@ -76,10 +73,10 @@ public class RateActivity extends Activity{
             voterDAO = new VoterDAO();
 
             try {
-                voterDAO.update(voter);
+                voterDAO.createOrupdate(voter, String.valueOf(rate));
             } catch (Exception e) {
                 reussi= false;
-                msgError = "VOTE ERREUR";
+                msgError = getResources().getString(R.string.ratingError);
             }
 
             return reussi;
@@ -97,10 +94,11 @@ public class RateActivity extends Activity{
                 startActivity(i); //ON REVIENT A L'ACTIVITE HUB
                 finish(); //ON DETRUIT L'ACTIVITE RATE
             } else {
-                pd.dismiss(); //ARRET DU PROGRESSDIALOG
                 Toast toast = Toast.makeText(RateActivity.this, msgError, Toast.LENGTH_SHORT);
                 toast.show();
             }
+
+            pd.dismiss(); //ARRET DU PROGRESSDIALOG
         }
 
         @Override

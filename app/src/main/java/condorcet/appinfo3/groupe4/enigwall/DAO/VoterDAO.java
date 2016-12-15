@@ -98,4 +98,27 @@ public class VoterDAO extends DAO<Voter> {
 
         return voter;
     }
+
+    /**
+     * Méthode permettant de créer ou updater les informations d'un vote
+     * @param le vote à ajouter ou modifier
+     * @param la valeur
+     */
+    public void createOrupdate(Voter obj, String valeur) throws Exception {
+        Voter voter = obj;
+        String json = "";
+
+        try {
+            json = gson.toJson(voter);
+        } catch (Exception e) {
+            throw new Exception("Erreur de conversion JSON");
+        }
+
+        ClientResponse response = service.path("createUpdateVoter/"+valeur).type("application/json").post(ClientResponse.class, json);
+        int status = response.getStatus();
+
+        if (status >= 400) {
+            throw new Exception("Une erreur est apparue !");
+        }
+    }
 }

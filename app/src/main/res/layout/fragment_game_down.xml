@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="layout.Game_down">
+    tools:context="layout.Game_down"
+    android:background="@color/colorPrimary">
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:padding="2dp"
+        android:background="#000000"/>
 </FrameLayout>
