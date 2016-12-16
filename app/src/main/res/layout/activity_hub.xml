@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="30sp"
-            android:textColor="?android:attr/editTextColor"
+            android:textColor="@color/colorTextBlack"
             android:gravity="center"
             android:textStyle="normal|bold"
             android:layout_gravity="center" />
@@ -44,7 +44,7 @@
         android:textSize="18sp"
         style="@style/Widget.AppCompat.Button.Colored"
         android:padding="25dp"
-        android:background="@android:color/holo_green_dark"
+        android:background="@color/colorButton"
         android:text="@string/hub_continue"
         android:id="@+id/continueButton"
         android:onClick="continuer" />
@@ -57,7 +57,7 @@
         android:textSize="18sp"
         style="@style/Widget.AppCompat.Button.Colored"
         android:padding="25dp"
-        android:background="@android:color/holo_green_dark"
+        android:background="@color/colorButton"
         android:text="@string/hub_begin"
         android:id="@+id/beginButton"
         android:onClick="commencer" />
@@ -70,7 +70,7 @@
         android:textSize="24sp"
         android:gravity="center"
         android:layout_marginTop="25dp"
-        android:textColor="@android:color/black" />
+        android:textColor="@color/colorTextBlack" />
 
     <TextView
         android:layout_width="match_parent"
@@ -79,7 +79,7 @@
         android:gravity="center"
         android:textSize="24sp"
         android:layout_weight="0.08"
-        android:textColor="@android:color/black" />
+        android:textColor="@color/colorTextBlack" />
 
     <TextView
         android:layout_width="match_parent"
@@ -88,5 +88,5 @@
         android:gravity="center"
         android:textSize="24sp"
         android:layout_weight="0.08"
-        android:textColor="@android:color/black" />
+        android:textColor="@color/colorTextBlack" />
 </LinearLayout>

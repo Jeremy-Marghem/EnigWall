@@ -49,9 +49,9 @@
             android:layout_marginRight="40dp"
             android:layout_marginTop="50dp"
             android:textSize="18sp"
-            android:background="@android:color/holo_green_dark"
+            android:background="@color/colorButton"
             android:layout_height="match_parent"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorTextWhite"
             android:onClick="signup" />
 
         <Button
@@ -64,8 +64,8 @@
             android:layout_marginRight="40dp"
             android:layout_marginTop="50dp"
             android:textSize="18sp"
-            android:background="@android:color/holo_green_dark"
-            android:textColor="@android:color/white"
+            android:background="@color/colorButton"
+            android:textColor="@color/colorTextWhite"
             android:onClick="login" />
     </LinearLayout>
 </LinearLayout>

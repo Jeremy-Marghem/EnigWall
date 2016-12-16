@@ -11,7 +11,7 @@
     <string name="password2">Passwort erneut eingeben</string>
     <string name="passwordMessage">Passwörter stimmen nicht überein</string>
     <string name="passwordLenght">Das Passwort muss 4 Zeichen minimuns enthalten</string>
-    <string name="mailMessage">Die e-mail ist nicht korrekt"</string>
+    <string name="mailMessage">Die e-mail ist nicht korrekt</string>
     <string name="reset">Reset</string>
     <string name="signupInProgress">Aktuelle Registrierung...</string>
     <string name="hub_welcome">Das spiel beginnt...</string>
@@ -26,7 +26,7 @@
     <string name="hub_begin">Starten eines Spiels</string>
     <string name="hub_continue">Spiel wieder aufnehmen</string>
     <string name="hub_connectMsg">Willkomen</string>
-    <string name="hub_del_cpt">" ACHTUNG! Dies wird Ihr Konto und Ihre Fortschritte im Spiel zu löschen!"</string>
+    <string name="hub_del_cpt">ACHTUNG! Dies wird Ihr Konto und Ihre Fortschritte im Spiel zu löschen!</string>
     <string name="hub_but_cancel">STORNIEREN</string>
     <string name="hub_but_del">LÖSCHEN</string>
     <string name="hub_signoff">Haben Sie trennen Sie wirklich?</string>
@@ -38,7 +38,7 @@
     <string name="menu_signoff">Ausloggen</string>
     <string name="msgLocalisation">Stadt</string>
     <string name="msgLocalisationRecherche">Die Berechnung des aktuellen Standorts...</string>
-    <string name="loadgame">" Das Rätsel wird geladen ..."</string>
+    <string name="loadgame">Das Rätsel wird geladen ...</string>
     <string name="msgIndicationProxi1">Sie sind sehr weit vom Ziel entfernt!</string>
     <string name="msgIndicationProxi2">Sie sind weit von dem Ziel!</string>
     <string name="msgIndicationProxi3">Sie sind nah am Ziel!</string>
@@ -46,12 +46,12 @@
     <string name="msgIndicationProxi5">Herzlichen Glückwunsch, Sie haben es geschafft!</string>
     <string name="nextEnigme">Nächste Enigma</string>
     <string name="voting">Zur Abstimmung</string>
-    <string name="confirmation">Une énigme est déjà en cours ! Voulez-vous quand même commencer une nouvelle partie ?</string>
-    <string name="begin">Commencer</string>
-    <string name="enigmeOK">Des énigmes sont disponibles !</string>
-    <string name="enigmeNOK">Aucune énigme disponible !</string>
-    <string name="ratingTxt">Merci de voter pour le parcours !</string>
-    <string name="ratingBtn">Votez !</string>
-    <string name="ratingError">Erreur pour l\'enregistrement du vote !</string>
+    <string name="confirmation">Ein Rätsel läuft schon! Möchten Sie noch ein neues Spiel starten?</string>
+    <string name="begin">Starten</string>
+    <string name="enigmeOK">Enigma sind vorhanden!</string>
+    <string name="enigmeNOK">Kein Rätsel vorhanden!</string>
+    <string name="ratingTxt">Bitte stimmen Sie für den Kurs</string>
+    <string name="ratingBtn">Stimmen Sie ab!</string>
+    <string name="ratingError">Fehler beim Speichern der Abstimmung!</string>
 
 </resources>

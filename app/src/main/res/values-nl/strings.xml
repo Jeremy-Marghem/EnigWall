@@ -26,7 +26,7 @@
     <string name="hub_begin">Start een spel</string>
     <string name="hub_continue">Een spel hervatten</string>
     <string name="hub_connectMsg">Welkom</string>
-    <string name="hub_del_cpt">" LET OP! Dit zal uw account en je voortgang in het spel te verwijderen!"</string>
+    <string name="hub_del_cpt">LET OP! Dit zal uw account en je voortgang in het spel te verwijderen!</string>
     <string name="hub_but_cancel">ANNULEREN</string>
     <string name="hub_but_del">VERWIJDEREN</string>
     <string name="hub_signoff">Wil je echt je los te koppelen?</string>
@@ -43,15 +43,15 @@
     <string name="msgIndicationProxi2">Je bent ver van het doel!</string>
     <string name="msgIndicationProxi3">U bent dicht bij het doel!</string>
     <string name="msgIndicationProxi4">Je bent heel dicht bij het doel !</string>
-    <string name="msgIndicationProxi5">"Gefeliciteerd, je bent geslaagd ! "</string>
+    <string name="msgIndicationProxi5">Gefeliciteerd, je bent geslaagd !</string>
     <string name="nextEnigme">Volgende Enigma</string>
     <string name="voting">Gaan stemmen</string>
-    <string name="confirmation">Une énigme est déjà en cours ! Voulez-vous quand même commencer une nouvelle partie ?</string>
-    <string name="begin">Commencer</string>
-    <string name="enigmeOK">Des énigmes sont disponibles !</string>
-    <string name="enigmeNOK">Aucune énigme disponible !</string>
-    <string name="ratingTxt">Merci de voter pour le parcours !</string>
-    <string name="ratingBtn">Votez !</string>
-    <string name="ratingError">Erreur pour l\'enregistrement du vote !</string>
+    <string name="confirmation">Een raadsel is al actief! Wil je nog steeds een nieuw spel beginnen?</string>
+    <string name="begin">Starten</string>
+    <string name="enigmeOK">Enigma zijn beschikbaar!</string>
+    <string name="enigmeNOK">Geen enigma beschikbaar!</string>
+    <string name="ratingTxt">kunt u stemmen voor de cursus !</string>
+    <string name="ratingBtn">Stem!</string>
+    <string name="ratingError">Fout bij het opslaan van de stemming!</string>
 
 </resources>

@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:id="@+id/textView2"
             android:layout_weight="4"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorTextBlack"
             android:textSize="18sp"
             android:layout_marginLeft="15dp"
             android:gravity="center" />
@@ -32,10 +32,10 @@
             android:id="@+id/pseudoEd"
             android:layout_weight="1"
             android:layout_marginLeft="15dp"
-            android:textCursorDrawable="@android:color/holo_green_dark"
-            android:backgroundTint="@android:color/holo_green_dark"
+            android:textCursorDrawable="@color/colorTextUnderline"
+            android:backgroundTint="@color/colorTextUnderline"
             android:layout_marginRight="15dp"
-            android:textColorLink="@android:color/holo_green_dark" />
+            android:textColorLink="@color/colorTextUnderline"/>
     </LinearLayout>
 
     <LinearLayout
@@ -50,7 +50,7 @@
             android:id="@+id/textView3"
             android:layout_weight="4"
             android:gravity="center"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorTextBlack"
             android:textSize="18sp"
             android:layout_marginLeft="15dp" />
 
@@ -62,10 +62,10 @@
             android:id="@+id/mailEd"
             android:layout_weight="1"
             android:layout_marginLeft="15dp"
-            android:textCursorDrawable="@android:color/holo_green_dark"
-            android:backgroundTint="@android:color/holo_green_dark"
+            android:textCursorDrawable="@color/colorTextUnderline"
+            android:backgroundTint="@color/colorTextUnderline"
             android:layout_marginRight="15dp"
-            android:textColorLink="@android:color/holo_green_dark" />
+            android:textColorLink="@color/colorTextUnderline" />
 
     </LinearLayout>
 
@@ -81,7 +81,7 @@
             android:id="@+id/textView4"
             android:layout_weight="4"
             android:gravity="center"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorTextBlack"
             android:textSize="18sp"
             android:layout_marginLeft="15dp" />
 
@@ -93,10 +93,10 @@
             android:id="@+id/passwordEd"
             android:layout_weight="1"
             android:layout_marginLeft="15dp"
-            android:textCursorDrawable="@android:color/holo_green_dark"
-            android:backgroundTint="@android:color/holo_green_dark"
+            android:textCursorDrawable="@color/colorTextUnderline"
+            android:backgroundTint="@color/colorTextUnderline"
             android:layout_marginRight="15dp"
-            android:textColorLink="@android:color/holo_green_dark" />
+            android:textColorLink="@color/colorTextUnderline" />
 
     </LinearLayout>
     <LinearLayout
@@ -111,7 +111,7 @@
             android:id="@+id/textView5"
             android:layout_weight="4"
             android:gravity="center"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorTextBlack"
             android:textSize="18sp"
             android:layout_marginLeft="15dp" />
 
@@ -123,10 +123,10 @@
             android:id="@+id/passwordEd2"
             android:layout_weight="1"
             android:layout_marginLeft="15dp"
-            android:textCursorDrawable="@android:color/holo_green_dark"
-            android:backgroundTint="@android:color/holo_green_dark"
+            android:textCursorDrawable="@color/colorTextUnderline"
+            android:backgroundTint="@color/colorTextUnderline"
             android:layout_marginRight="15dp"
-            android:textColorLink="@android:color/holo_green_dark" />
+            android:textColorLink="@color/colorTextUnderline" />
 
     </LinearLayout>
     <LinearLayout
@@ -143,9 +143,9 @@
             android:layout_weight="0.5"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:background="@android:color/holo_green_dark"
+            android:background="@color/colorButton"
             android:textSize="14sp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorTextWhite"
             android:onClick="reset" />
 
         <Button
@@ -156,8 +156,8 @@
             android:layout_weight="1"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:background="@android:color/holo_green_dark"
-            android:textColor="@android:color/white"
+            android:background="@color/colorButton"
+            android:textColor="@color/colorTextWhite"
             android:onClick="signin" />
     </LinearLayout>
 </LinearLayout>

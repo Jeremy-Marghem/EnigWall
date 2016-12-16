@@ -51,7 +51,7 @@
         android:textSize="18sp"
         style="@style/Widget.AppCompat.Button.Colored"
         android:padding="25dp"
-        android:background="@android:color/holo_green_dark"
+        android:background="@color/colorButton"
         android:onClick="signup" />
 
     <Button
@@ -64,6 +64,6 @@
         android:textSize="18sp"
         style="@style/Widget.AppCompat.Button.Colored"
         android:padding="25dp"
-        android:background="@android:color/holo_green_dark"
+        android:background="@color/colorButton"
         android:onClick="login" />
 </LinearLayout>
