@@ -2,11 +2,17 @@ package condorcet.appinfo3.groupe4.enigwall;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.Toast;
 import condorcet.appinfo3.groupe4.enigwall.DAO.VoterDAO;
@@ -14,11 +20,13 @@ import condorcet.appinfo3.groupe4.enigwall.Metier.Utilisateur;
 import condorcet.appinfo3.groupe4.enigwall.Metier.Voter;
 import static java.lang.Math.round;
 
-public class RateActivity extends Activity{
+public class RateActivity extends Activity {
+    Button voting;
     RatingBar ratingBar;
     int id_parcours, rate;
     Voter voter;
     Utilisateur utilisateur;
+    private NetworkReceiver receiver;
 
     public final static String IDUSER = "user";
 
@@ -27,11 +35,23 @@ public class RateActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
 
-        ratingBar = (RatingBar)findViewById(R.id.ratingBar);
+        voting = (Button) findViewById(R.id.RatingValidButton);
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
 
         Intent i = getIntent();
         utilisateur = (Utilisateur) i.getParcelableExtra(GameActivity.IDUSER);
         id_parcours = i.getIntExtra(GameActivity.IDPARCOURS, -1);
+
+        // Vérification en temps réel de la connexion
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new NetworkReceiver();
+        this.registerReceiver(receiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(receiver);
     }
 
     @Override
@@ -114,6 +134,25 @@ public class RateActivity extends Activity{
         protected void onCancelled() {
             Toast toast = Toast.makeText(RateActivity.this,getResources().getString(R.string.toastCancel),Toast.LENGTH_SHORT);
             toast.show();
+        }
+    }
+
+    // Classe interne pour détection d'internet
+    private class NetworkReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+            // Si aucune connexion n'est trouvée, on affiche un toast
+            if (networkInfo == null || !networkInfo.isAvailable() || !networkInfo.isConnected()) {
+                Toast toast = Toast.makeText(RateActivity.this, getResources().getText(R.string.connexionError), Toast.LENGTH_SHORT);
+                toast.show();
+                // On désactive le bouton
+                voting.setEnabled(false);
+            } else {
+                voting.setEnabled(true);
+            }
         }
     }
 }

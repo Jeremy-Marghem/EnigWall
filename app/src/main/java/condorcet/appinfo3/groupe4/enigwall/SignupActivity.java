@@ -237,6 +237,7 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
+    // Classe interne pour détection d'internet
     private class NetworkReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {

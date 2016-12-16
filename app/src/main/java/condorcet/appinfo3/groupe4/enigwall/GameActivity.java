@@ -406,12 +406,10 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
             // Réactivation de l'orientation
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
+            // A FAIRE
             switch (Locale.getDefault().getLanguage()) {
                 case "fr":
                     enigmeTv.setText(currentEnigme.getTexteenigmefr());
-                    break;
-                case "en":
-                    enigmeTv.setText(currentEnigme.getTexteenigmeen());
                     break;
             }
 
@@ -502,7 +500,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
-    // Classe interne pour détection de l'internet
+    // Classe interne pour détection d'internet
     private class NetworkReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -513,7 +511,7 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
             if (networkInfo == null || !networkInfo.isAvailable() || !networkInfo.isConnected()) {
                 Toast toast = Toast.makeText(GameActivity.this, getResources().getText(R.string.connexionError), Toast.LENGTH_SHORT);
                 toast.show();
-                // On désactive les boutons
+                // On désactive le bouton
                 nextEnigme.setEnabled(false);
             }
         }

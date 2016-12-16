@@ -46,6 +46,7 @@ public class MainActivity extends Activity {
         startActivity(i); //ON PASSE A L'ACTIVITE LOGIN
     }
 
+    // Classe interne pour détection d'internet
     private class NetworkReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {

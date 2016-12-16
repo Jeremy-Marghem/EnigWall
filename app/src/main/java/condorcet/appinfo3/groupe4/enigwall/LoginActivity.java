@@ -121,6 +121,7 @@ public class LoginActivity extends Activity {
         }
     }
 
+    // Classe interne pour détection d'internet
     private class NetworkReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
