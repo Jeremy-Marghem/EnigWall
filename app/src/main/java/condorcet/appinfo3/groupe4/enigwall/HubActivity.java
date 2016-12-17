@@ -129,9 +129,6 @@ public class HubActivity extends AppCompatActivity implements GoogleApiClient.Co
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 DeleteUser delete = new DeleteUser(HubActivity.this);
                                 delete.execute();
-                                Intent in = new Intent(HubActivity.this, MainActivity.class);
-                                startActivity(in);
-                                finish();
                             }
                         });
                 builder.setCustomTitle(mytitle);
