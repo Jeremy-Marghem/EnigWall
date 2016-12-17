@@ -175,33 +175,21 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
             // Si on est entre 0 et 25 M, le changement d'énigme est possible
             if(distance > 1000 && distance <= 4000) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi1));
+            } else if(distance <= 1000 && distance > 400) {
+                indicationTv.setText(getResources().getText(R.string.msgIndicationProxi2));
+            } else if(distance <= 400 && distance > 100) {
+                indicationTv.setText(getResources().getText(R.string.msgIndicationProxi3));
+            } else if(distance <= 100 && distance > 25) {
+                indicationTv.setText(getResources().getText(R.string.msgIndicationProxi4));
                 if(etape != 1){
                     vibreur.vibrate(1000);
                     etape = 1;
                 }
-            } else if(distance <= 1000 && distance > 400) {
-                indicationTv.setText(getResources().getText(R.string.msgIndicationProxi2));
-                if(etape != 2){
-                    vibreur.vibrate(1000);
-                    etape = 2;
-                }
-            } else if(distance <= 400 && distance > 100) {
-                indicationTv.setText(getResources().getText(R.string.msgIndicationProxi3));
-                if(etape != 3){
-                    vibreur.vibrate(1000);
-                    etape = 3;
-                }
-            } else if(distance <= 100 && distance > 25) {
-                indicationTv.setText(getResources().getText(R.string.msgIndicationProxi4));
-                if(etape != 4){
-                    vibreur.vibrate(1000);
-                    etape = 4;
-                }
             } else if(distance <= 25 && distance >= 0) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi5));
-                if(etape != 5){
+                if(etape != 2){
                     vibreur.vibrate(2000);
-                    etape = 5;
+                    etape = 2;
                 }
                 // On remet une image du monument non floutée
                 enigmePicture.setImageBitmap(bitmap);
@@ -410,6 +398,15 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
             switch (Locale.getDefault().getLanguage()) {
                 case "fr":
                     enigmeTv.setText(currentEnigme.getTexteenigmefr());
+                    break;
+                case "en":
+                    enigmeTv.setText(currentEnigme.getTexteenigmeen());
+                    break;
+                case "de":
+                    enigmeTv.setText(currentEnigme.getTexteenigmeger());
+                    break;
+                case "nl":
+                    enigmeTv.setText(currentEnigme.getTexteenigmenl());
                     break;
             }
 
