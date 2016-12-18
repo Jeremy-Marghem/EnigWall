@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -74,6 +75,8 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     private NetworkReceiver receiver;
     private Vibrator vibreur;
     private int etape = 0;
+    private MediaPlayer player;
+
 
     public final static String IDUSER = "user";
     public final static String IDVILLE = "ville";
@@ -187,6 +190,12 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
                 }
             } else if(distance <= 25 && distance >= 0) {
                 indicationTv.setText(getResources().getText(R.string.msgIndicationProxi5));
+                if(player != null) {
+                    player.stop();
+                    player.release();
+                }
+                player = MediaPlayer.create(this, R.raw.sound_win);
+                player.start();
                 if(etape != 2){
                     vibreur.vibrate(2000);
                     etape = 2;
