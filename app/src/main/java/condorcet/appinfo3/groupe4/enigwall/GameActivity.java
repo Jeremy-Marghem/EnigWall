@@ -77,7 +77,6 @@ public class GameActivity extends AppCompatActivity implements GoogleApiClient.C
     private int etape = 0;
     private MediaPlayer player;
 
-
     public final static String IDUSER = "user";
     public final static String IDVILLE = "ville";
     public final static String IDSTATE = "state";
